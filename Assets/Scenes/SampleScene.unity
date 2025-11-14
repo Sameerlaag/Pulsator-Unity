@@ -372,13 +372,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.12987654, y: -0, z: -0, w: 0.9915302}
-  m_LocalPosition: {x: 150, y: 4.69, z: -7.44}
+  m_LocalRotation: {x: 0.008403651, y: 0, z: 0, w: 0.9999647}
+  m_LocalPosition: {x: 150, y: 8, z: -7.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: -14.925, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.963, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,7 +465,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355056435}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!154 &355056438
 TerrainCollider:
   m_ObjectHideFlags: 0
@@ -538,11 +538,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44dcacfad7c5305419861d912cfd61ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amplitude: 1
-  wavelength: 2
-  speed: 1
-  useMusic: 0
-  music: {fileID: 1588348305}
+  audioSource: {fileID: 1588348305}
+  maxWaveHeight: 5
+  waveSpeed: 2
+  bassImpact: 3
+  waveFrequency: 0.5
+  maxSpikeHeight: 10
+  spikeDecayDistance: 100
+  drumImpact: 5
+  spikeRadius: 10
+  innerRadius: 10
+  fadeRadius: 15
+  maxRadius: 20
+  updateInterval: 1
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -956,6 +964,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 18c8b90499310c74b85dc086d0d0fe8c, type: 3}
       propertyPath: m_Name
       value: SpaceShuttle v2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 18c8b90499310c74b85dc086d0d0fe8c, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1277206959257944305, guid: 18c8b90499310c74b85dc086d0d0fe8c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -1516,6 +1528,125 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1 &2136827798
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2136827802}
+  - component: {fileID: 2136827801}
+  - component: {fileID: 2136827800}
+  - component: {fileID: 2136827799}
+  m_Layer: 0
+  m_Name: RetrowaveTerrain
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &2136827799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136827798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1e22df9e39490986d27bcb4876ca4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 50
+  depth: 50
+  tileSize: 1
+  player: {fileID: 701165146}
+  innerDeadZone: 10
+  outerRadius: 20
+  bassStartRadius: 10
+  bassEndRadius: 15
+  drumStartRadius: 15
+  drumEndRadius: 20
+  waveSpeed: 2
+  waveFrequency: 1
+  waveHeight: 0.5
+  bassHeight: 2
+  bassSpikeSize: 1
+  bassReactivity: 5
+  drumHeight: 5
+  drumSpikeSize: 2
+  drumReactivity: 8
+  audioSource: {fileID: 1588348305}
+--- !u!23 &2136827800
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136827798}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: bbaba0d7df861aa468b675f951ec796c, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &2136827801
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136827798}
+  m_Mesh: {fileID: 0}
+--- !u!4 &2136827802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136827798}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 149.45366, y: -0, z: 27.72034}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1529,3 +1660,4 @@ SceneRoots:
   - {fileID: 1588348306}
   - {fileID: 220515760}
   - {fileID: 1863183505}
+  - {fileID: 2136827802}
