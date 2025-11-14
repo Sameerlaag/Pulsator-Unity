@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e50ad1f6a3bb86c48aee0bd0f3c00a94
+timeCreated: 1517864571
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 111392
+  packageName: Space shuttle of the future
+  packageVersion: 1.0
+  assetPath: Assets/SpaceShuttle/Assets/Animation/SpaceShuttle v1.controller
+  uploadId: 747435

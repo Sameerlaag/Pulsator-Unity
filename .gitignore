@@ -1,0 +1,39 @@
+# Ignore Unity-generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# Ignore most asset file types (heavy binaries) but keep folders
+Assets/**/*.psd
+Assets/**/*.tga
+Assets/**/*.fbx
+Assets/**/*.wav
+Assets/**/*.mp3
+Assets/**/*.png
+Assets/**/*.jpg
+Assets/**/*.exr
+
+# Keep scripts, scenes, prefabs, animations, meta files
+!Assets/**/*.cs
+!Assets/**/*.unity
+!Assets/**/*.prefab
+!Assets/**/*.controller
+!Assets/**/*.anim
+!Assets/**/*.mat
+!Assets/**/*.meta
+
+# Packages & Project Settings
+!Packages/manifest.json
+!Packages/packages-lock.json
+!ProjectSettings/ProjectVersion.txt
+
+# Editor clutter
+.vs/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

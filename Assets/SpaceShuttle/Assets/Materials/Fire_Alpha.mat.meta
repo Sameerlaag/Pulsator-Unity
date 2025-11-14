@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 2431e390d3c18174f90bb96f3c8a35e3
+timeCreated: 1517957040
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 111392
+  packageName: Space shuttle of the future
+  packageVersion: 1.0
+  assetPath: Assets/SpaceShuttle/Assets/Materials/Fire_Alpha.mat
+  uploadId: 747435

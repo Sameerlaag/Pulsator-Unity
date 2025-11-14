@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: bc83de5a4b8b8ac4b9dffeec33bec87f
+timeCreated: 1517584319
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 111392
+  packageName: Space shuttle of the future
+  packageVersion: 1.0
+  assetPath: Assets/SpaceShuttle/Demo/Scene.unity
+  uploadId: 747435

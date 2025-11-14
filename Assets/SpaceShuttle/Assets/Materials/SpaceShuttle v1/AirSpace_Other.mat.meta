@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 366bcda1fac62b341a48f57060f1e710
+timeCreated: 1517583453
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 111392
+  packageName: Space shuttle of the future
+  packageVersion: 1.0
+  assetPath: Assets/SpaceShuttle/Assets/Materials/SpaceShuttle v1/AirSpace_Other.mat
+  uploadId: 747435

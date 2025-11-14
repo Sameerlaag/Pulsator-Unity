@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ca0e6b0a66e9d5e42b5ec989df60737e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 111392
+  packageName: Space shuttle of the future
+  packageVersion: 1.0
+  assetPath: Assets/SpaceShuttle/Assets/Materials/SpaceShuttle v2/Shuttle_Wings_Spoiler.mat
+  uploadId: 747435
