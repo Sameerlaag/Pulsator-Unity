@@ -46,12 +46,15 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.1.11f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\PlayerInputs.cs" />
+    <Compile Include="Assets\Scripts\PlayerInputManager.cs" />
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\ChassisController.cs" />
     <Compile Include="Assets\Suggo Creations\RETROWAVE SKIES Lite\Scripts\GetGlobalMatrixLite.cs" />
     <Compile Include="Assets\Suggo Creations\RETROWAVE SKIES Lite\Readme Assets\Scripts\ReadmeLite.cs" />
     <Compile Include="Assets\Scripts\RetrowaveTerrain.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\RotateCamera.cs" />
+    <Compile Include="Assets\Scripts\PlayerLocomotion.cs" />
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\TerrainPulsator.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -836,8 +839,8 @@
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:\Users\Sameer\My project (5)\Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.ShaderGraph.Editor">
-      <HintPath>C:\Users\Sameer\My project (5)\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    <Reference Include="Unity.TerrainTools">
+      <HintPath>C:\Users\Sameer\My project (5)\Library\ScriptAssemblies\Unity.TerrainTools.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>C:\Users\Sameer\My project (5)\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
@@ -848,8 +851,8 @@
     <Reference Include="UnityEngine.UI">
       <HintPath>C:\Users\Sameer\My project (5)\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.TerrainTools">
-      <HintPath>C:\Users\Sameer\My project (5)\Library\ScriptAssemblies\Unity.TerrainTools.dll</HintPath>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>C:\Users\Sameer\My project (5)\Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
       <HintPath>C:\Users\Sameer\My project (5)\Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
