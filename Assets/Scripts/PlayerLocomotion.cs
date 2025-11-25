@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -31,7 +32,6 @@ public class PlayerLocomotion : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
         referenceX = transform.position.x;
-
         inputs = GetComponent<PlayerInputManager>();
         if (inputs != null)
             inputs.OnMoveInput += HandleMoveInput;

@@ -46,17 +46,25 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.1.11f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\GameDircetor.cs" />
+    <Compile Include="Assets\Scripts\FFTUtility.cs" />
     <Compile Include="Assets\Scripts\PlayerInputs.cs" />
     <Compile Include="Assets\Scripts\PlayerInputManager.cs" />
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\ChassisController.cs" />
     <Compile Include="Assets\Suggo Creations\RETROWAVE SKIES Lite\Scripts\GetGlobalMatrixLite.cs" />
     <Compile Include="Assets\Suggo Creations\RETROWAVE SKIES Lite\Readme Assets\Scripts\ReadmeLite.cs" />
+    <Compile Include="Assets\Scripts\NoteMover.cs" />
     <Compile Include="Assets\Scripts\RetrowaveTerrain.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\Scripts\BoxesCollision.cs" />
+    <Compile Include="Assets\Scripts\MapData.cs" />
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\RotateCamera.cs" />
+    <Compile Include="Assets\Scripts\AudioMapGenerator.cs" />
     <Compile Include="Assets\Scripts\PlayerLocomotion.cs" />
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\TerrainPulsator.cs" />
+    <Compile Include="Assets\Scripts\LoadingScreen.cs" />
+    <Compile Include="Assets\Scripts\RythmeAnalyzer.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
