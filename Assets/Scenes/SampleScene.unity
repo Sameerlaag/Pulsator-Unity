@@ -934,7 +934,9 @@ MonoBehaviour:
   redCubePrefab: {fileID: 3345147340148355696, guid: f49287088fddd36478e3edd92cf0cbbc, type: 3}
   noteTravelTime: 2
   laneWidth: 2
-  moveSpeed: 50
+  shipMoveSpeed: 8
+  startDelay: 1
+  autoStartOnMapReady: 1
 --- !u!4 &758756288
 Transform:
   m_ObjectHideFlags: 0
@@ -1734,6 +1736,7 @@ GameObject:
   - component: {fileID: 1588348305}
   - component: {fileID: 1588348308}
   - component: {fileID: 1588348307}
+  - component: {fileID: 1588348309}
   m_Layer: 0
   m_Name: Audio Source
   m_TagString: Untagged
@@ -1894,13 +1897,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1588348305}
-  sampleSize: 1024
+  sampleSize: 2048
+  BPM: 120
+  subdivisionsPerBeat: 2
+  beatOffset: 0
   lanes: 5
-  sensitivity: 2
-  heavyThreshold: 0.6
+  minimumEnergy: 0.1
+  peakSensitivity: 1.5
+  useFrequencyMapping: 0
+  heavyNoteInterval: 8
+  laneChangeChance: 0.6
+  mapNotes: []
   generateOnStart: 1
   forceGenerate: 1
-  mapNotes: []
+--- !u!114 &1588348309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588348304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fdc0f8f22544f6e9cb383dce727629c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bpm: 120
+  lanes: 4
+  subdivisionsPerBeat: 4
+  totalBeats: 8
+  laneSpacing: 1
+  timeSpacing: 0.5
 --- !u!1001 &1625918964
 PrefabInstance:
   m_ObjectHideFlags: 0

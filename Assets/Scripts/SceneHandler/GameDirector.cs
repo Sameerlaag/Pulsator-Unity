@@ -5,118 +5,223 @@ using UnityEngine.Serialization;
 
 public class RhythmGameDirector : MonoBehaviour
 {
-    [Header("References")]
+   [Header("References")]
     public AudioMapGenerator mapGenerator;
     public AudioSource musicSource;
 
     [Header("Ships")]
-    public Transform leftShip;   // Assign Ship GameObject
-    public Transform centerShip; // Assign Ship GameObject
-    public Transform rightShip;  // Assign Ship GameObject
-    private Transform defaultLeftShip;   // Assign Ship GameObject
-    private Transform defaultCenterShip; // Assign Ship GameObject
-    private Transform defaultRightShip;  // Assign Ship GameObject
-    public Transform playerShip;  // Assign Ship GameObject
+    public Transform leftShip;
+    public Transform centerShip;
+    public Transform rightShip;
+    public Transform playerShip;
 
     [Header("Prefabs")]
     public GameObject yellowCubePrefab; // Standard (Shoot)
-    public GameObject redCubePrefab;  // Heavy (Dodge)
+    public GameObject redCubePrefab;    // Heavy (Dodge)
 
     [Header("Game Settings")]
     [Tooltip("How many seconds it takes for a cube to fly from Ship to Player")]
-    public float noteTravelTime = 2.0f; 
-    public float laneWidth = 2.5f; // Distance between lanes
+    public float noteTravelTime = 2.0f;
+    [Tooltip("Distance between lanes")]
+    public float laneWidth = 2.5f;
+    [Tooltip("How fast ships move to their target lane position")]
+    public float shipMoveSpeed = 8f;
+    [Tooltip("Optional delay before starting music")]
+    public float startDelay = 1f;
+
+    [Header("Debug")]
+    public bool autoStartOnMapReady = true;
 
     private List<EMapNote> notes;
     private int nextNoteIndex = 0;
     private bool isPlaying = false;
-    private float positionXRef;
-    public float moveSpeed = 50f;
-    // Mapping lanes to X coordinates
-    // Assuming Lane 2 is center (0), Lane 0 is far left (-4), Lane 4 is far right (+4)
-    private float[] laneXPositions; 
-    private Transform _playerShip;  // Assign Ship GameObject
+    
+    // Lane positions and ship targets
+    private float[] laneXPositions;
+    private Vector3 defaultLeftPos;
+    private Vector3 defaultCenterPos;
+    private Vector3 defaultRightPos;
+    
+    // Ship target tracking
+    private float leftShipTargetX;
+    private float centerShipTargetX;
+    private float rightShipTargetX;
 
     private void Start()
     {
-        // Calculate X positions for 5 lanes centered at 0
-        laneXPositions = new float[5];
-        _playerShip =  playerShip;
-        positionXRef = _playerShip.position.x;
-        defaultLeftShip = leftShip; 
-        defaultCenterShip = centerShip; 
-        defaultRightShip = rightShip; 
-        for(int i=0; i<5; i++)
+        // Store default ship positions
+        defaultLeftPos = leftShip.position;
+        defaultCenterPos = centerShip.position;
+        defaultRightPos = rightShip.position;
+
+        // Calculate lane X positions (centered around player)
+        laneXPositions = new float[mapGenerator.lanes];
+        float playerX = playerShip.position.x;
+        
+        for (int i = 0; i < laneXPositions.Length; i++)
         {
-            laneXPositions[i] = positionXRef + ((i - 2) * laneWidth);
+            laneXPositions[i] = playerX + ((i - 2) * laneWidth);
         }
 
-        // Wait for generator to finish
-        mapGenerator.OnMapGenerationComplete += OnMapReady;
+        // Initialize ship targets to their default positions
+        leftShipTargetX = leftShip.position.x;
+        centerShipTargetX = centerShip.position.x;
+        rightShipTargetX = rightShip.position.x;
+
+        // Wait for map generation
+        if (mapGenerator != null)
+        {
+            mapGenerator.OnMapGenerationComplete += OnMapReady;
+        }
+        else
+        {
+            Debug.LogError("[Director] No BeatSyncedMapGenerator assigned!");
+        }
     }
 
     private void OnMapReady()
     {
         notes = mapGenerator.mapNotes;
-        // Sort just in case parallel processing messed up order (though linear loop shouldn't)
-        notes.Sort((a, b) => a.time.CompareTo(b.time)); 
+        notes.Sort((a, b) => a.time.CompareTo(b.time));
         
-        StartCoroutine(StartGameRoutine());
+        Debug.Log($"[Director] Map ready with {notes.Count} notes. Lanes: {mapGenerator.lanes}");
+        
+        if (autoStartOnMapReady)
+        {
+            StartCoroutine(StartGameRoutine());
+        }
     }
 
     private IEnumerator StartGameRoutine()
     {
-        // Optional: Wait for loading screen to fade
-        yield return new WaitForSeconds(1.0f);
-
+        yield return new WaitForSeconds(startDelay);
+        
         musicSource.Play();
         isPlaying = true;
+        nextNoteIndex = 0;
+        
+        Debug.Log("[Director] Game started!");
+    }
+
+    [ContextMenu("Manual Start")]
+    public void ManualStart()
+    {
+        if (notes == null || notes.Count == 0)
+        {
+            Debug.LogError("[Director] No map loaded!");
+            return;
+        }
+        StartCoroutine(StartGameRoutine());
     }
 
     private void Update()
     {
         if (!isPlaying) return;
 
-        // The current time of the song
-        float songTime = musicSource.time;
+        // === SAMPLE-BASED TIMING (PERFECT SYNC) ===
+        float currentTime = musicSource.timeSamples / (float)musicSource.clip.frequency;
+        float spawnTime = currentTime + noteTravelTime;
 
-        // Look ahead! We want to spawn notes that are due in 'noteTravelTime' seconds
-        // so they arrive at the player exactly on beat.
-        float spawnTime = songTime + noteTravelTime;
-
-        while (nextNoteIndex < notes.Count && notes[nextNoteIndex].time < spawnTime)
+        // Spawn all notes that should appear now
+        while (nextNoteIndex < notes.Count && notes[nextNoteIndex].time <= spawnTime)
         {
             SpawnNote(notes[nextNoteIndex]);
             nextNoteIndex++;
+        }
+
+        // Smoothly move ships to their target X positions
+        UpdateShipPositions();
+
+        // Stop when finished
+        if (nextNoteIndex >= notes.Count && !musicSource.isPlaying)
+        {
+            isPlaying = false;
+            Debug.Log("[Director] Song finished!");
         }
     }
 
     private void SpawnNote(EMapNote note)
     {
-        // 1. Determine which ship fires
-        Transform sourceShip = centerShip;
-        if (note.lane == 0 || note.lane == 1) sourceShip = leftShip;
-        if (note.lane == 3 || note.lane == 4) sourceShip = rightShip;
+        // === RANDOMLY PICK A SHIP ===
+        Transform[] ships = new Transform[] { leftShip, centerShip, rightShip };
+        int randomIndex = Random.Range(0, ships.Length);
+        Transform sourceShip = ships[randomIndex];
 
-        // 2. Determine Prefab based on Type
-        GameObject prefabToSpawn = (note.type == NoteType.Heavy) ? redCubePrefab : yellowCubePrefab;
+        float targetX = laneXPositions[note.lane];
 
-        // 3. Spawn
-        GameObject cube = Instantiate(prefabToSpawn, sourceShip.position, Quaternion.identity);
+        // === UPDATE SHIP TARGET ===
+        if (sourceShip == leftShip) leftShipTargetX = targetX;
+        else if (sourceShip == centerShip) centerShipTargetX = targetX;
+        else if (sourceShip == rightShip) rightShipTargetX = targetX;
 
-        // 4. Setup Cube Movement
-        // We calculate exact start and end positions
+        // === CHOOSE PREFAB ===
+        GameObject prefab = (note.type == NoteType.Heavy) ? redCubePrefab : yellowCubePrefab;
+
+        // === SPAWN CUBE ===
+        GameObject cube = Instantiate(prefab, sourceShip.position, Quaternion.identity);
+
         Vector3 startPos = sourceShip.position;
-        // Target Z is usually 0 or wherever the player is
-        Vector3 endPos = new Vector3(laneXPositions[note.lane], _playerShip.position.y, _playerShip.position.z); 
+        Vector3 endPos = new Vector3(targetX, playerShip.position.y, playerShip.position.z);
 
-        // We attach a mover script (see below)
-        NoteMover mover = cube.AddComponent<NoteMover>();
-        sourceShip.position = Vector3.Lerp(sourceShip.position, new Vector3(laneXPositions[note.lane], sourceShip.position.y, sourceShip.position.z), moveSpeed * Time.fixedDeltaTime);
+        NoteMover mover = cube.GetComponent<NoteMover>();
+        if (mover == null)
+            mover = cube.AddComponent<NoteMover>();
 
         mover.Initialize(startPos, endPos, noteTravelTime);
+
+        NoteData data = cube.AddComponent<NoteData>();
+        data.noteType = note.type;
+        data.lane = note.lane;
+        data.power = note.power;
+    }
+
+
+    private void UpdateShipPositions()
+    {
+        // Smoothly interpolate ships to their target X positions
+        Vector3 leftPos = leftShip.position;
+        leftPos.x = Mathf.Lerp(leftPos.x, leftShipTargetX, shipMoveSpeed * Time.deltaTime);
+        leftShip.position = leftPos;
+
+        Vector3 centerPos = centerShip.position;
+        centerPos.x = Mathf.Lerp(centerPos.x, centerShipTargetX, shipMoveSpeed * Time.deltaTime);
+        centerShip.position = centerPos;
+
+        Vector3 rightPos = rightShip.position;
+        rightPos.x = Mathf.Lerp(rightPos.x, rightShipTargetX, shipMoveSpeed * Time.deltaTime);
+        rightShip.position = rightPos;
+    }
+
+    [ContextMenu("Reset Ships")]
+    public void ResetShips()
+    {
+        leftShip.position = defaultLeftPos;
+        centerShip.position = defaultCenterPos;
+        rightShip.position = defaultRightPos;
         
-        // Optional: Trigger Ship Animation here
-        // sourceShip.GetComponent<Animator>().SetTrigger("Fire");
+        leftShipTargetX = defaultLeftPos.x;
+        centerShipTargetX = defaultCenterPos.x;
+        rightShipTargetX = defaultRightPos.x;
+    }
+
+    private void OnDestroy()
+    {
+        if (mapGenerator != null)
+            mapGenerator.OnMapGenerationComplete -= OnMapReady;
+    }
+
+    // === DEBUG HELPERS ===
+    private void OnDrawGizmosSelected()
+    {
+        if (playerShip == null || laneXPositions == null) return;
+
+        // Draw lane positions
+        Gizmos.color = Color.cyan;
+        for (int i = 0; i < laneXPositions.Length; i++)
+        {
+            Vector3 start = new Vector3(laneXPositions[i], playerShip.position.y - 1f, playerShip.position.z);
+            Vector3 end = new Vector3(laneXPositions[i], playerShip.position.y + 1f, playerShip.position.z);
+            Gizmos.DrawLine(start, end);
+        }
     }
 }
