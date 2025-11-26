@@ -35,6 +35,7 @@ public class AudioMapGenerator : MonoBehaviour
     [Range(0f, 1f)]
     public float laneChangeChance = 0.6f;
 
+    
     [Header("Output")] 
     public List<EMapNote> mapNotes = new List<EMapNote>();
     public bool generateOnStart = true;
@@ -149,7 +150,7 @@ public class AudioMapGenerator : MonoBehaviour
 
         // === CALCULATE BEAT GRID ===
         float secondsPerBeat = 60f / BPM;
-        float subdivisionInterval = secondsPerBeat / subdivisionsPerBeat;
+        float subdivisionInterval = secondsPerBeat / this.subdivisionsPerBeat;
         int sampleRate = clip.frequency;
         float songDuration = (float)clip.samples / sampleRate;
         
@@ -233,23 +234,65 @@ public class AudioMapGenerator : MonoBehaviour
             .ToList();
 
         Debug.Log($"[Beat Map] Quantized to {groupedHits.Count} grid-aligned hits");
+// --- New Constants to Define the Musical Structure ---
 
+// Your current setting for subdivisions per beat (e.g., 4 = sixteenth notes)
+        int subdivisionsPerBeat = this.subdivisionsPerBeat; // Use the public variable
+
+// Assume 4 beats per measure (common 4/4 time)
+        const int BeatsPerMeasure = 4; 
+        int subdivisionsPerMeasure = subdivisionsPerBeat * BeatsPerMeasure; 
+
+// Define the fixed lane for the main downbeat (e.g., Lane 0 for the "kick drum")
+        const int DownbeatLane = 0;
         // === ASSIGN LANES & TYPES ===
         int currentLane = lanes / 2; // Start in center
-        int beatCounter = 0;
+// No more 'beatCounter' needed!
 
         foreach (var hit in groupedHits)
         {
-            int targetLane;
-
-            if (useFrequencyMapping)
+            // --- Determine Musical Position ---
+    
+            // 1. Is this hit on a major beat? (e.g., the '1', '2', '3', or '4' in a measure)
+            bool isMajorBeat = (hit.subdivIndex % subdivisionsPerBeat == 0); 
+    
+            // 2. Is this hit on the DOWNBEAT? (e.g., the '1' of an N-beat interval)
+            // We check the absolute beat count for the heavyNoteInterval logic.
+            int absoluteBeatCount = hit.subdivIndex / subdivisionsPerBeat;
+    
+            // Determine note type
+            NoteType type;
+            if (heavyNoteInterval > 0 && (absoluteBeatCount % heavyNoteInterval == 0))
             {
-                // Map to strongest frequency band
-                targetLane = GetStrongestBand(hit.frequencyBands);
+                type = NoteType.Heavy; // ALWAYS mark the root note/downbeat with the Heavy type
             }
             else
             {
-                // Use pattern-based lane selection
+                type = NoteType.Standard; 
+            }
+    
+            // --- Determine Lane Assignment (Option A Logic) ---
+            int targetLane;
+
+            if (type == NoteType.Heavy)
+            {
+                // 1. HEAVY/ROOT NOTE: Lock to a consistent lane
+                targetLane = DownbeatLane; 
+            }
+            else if (useFrequencyMapping)
+            {
+                // Make a copy of the bands array
+                float[] fillBands = (float[])hit.frequencyBands.Clone();
+    
+                // Set the energy for the Downbeat Lane (Lane 0) to zero
+                // This forces the standard note to be mapped to the strongest *other* frequency.
+                fillBands[DownbeatLane] = 0f; 
+    
+                targetLane = GetStrongestBand(fillBands);
+            }
+            else
+            {
+                // 3. STANDARD NOTES (Pattern): Use your original pattern logic
                 if (UnityEngine.Random.value < laneChangeChance)
                 {
                     // Move to adjacent lane
@@ -262,17 +305,7 @@ public class AudioMapGenerator : MonoBehaviour
                 }
             }
 
-            // Determine note type
-            NoteType type;
-            if (heavyNoteInterval > 0 && beatCounter % heavyNoteInterval == 0 && beatCounter > 0)
-            {
-                type = NoteType.Heavy; // Red note every N beats
-            }
-            else
-            {
-                type = NoteType.Standard; // Yellow/blue note
-            }
-
+            // --- Create and Add Note ---
             mapNotes.Add(new EMapNote
             {
                 time = hit.gridTime,
@@ -282,7 +315,7 @@ public class AudioMapGenerator : MonoBehaviour
             });
 
             currentLane = targetLane;
-            beatCounter++;
+            // beatCounter is removed
         }
 
         Debug.Log($"[Beat Map] Final map: {mapNotes.Count} notes");

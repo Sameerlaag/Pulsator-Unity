@@ -12,33 +12,40 @@ public class LoadingScreenController : MonoBehaviour
 
     private void Awake()
     {
+        // Set up the event listeners as early as possible (in Awake) 
+        // to prevent missed events if the generator starts too quickly.
+        if (generator != null)
+        {
+            generator.OnMapGenerationStart += ShowLoading;
+            generator.OnMapGenerationComplete += HideLoading;
+        }
+        else
+        {
+            Debug.LogError("LoadingScreenController: AudioMapGenerator reference is null.");
+        }
+
         if (loadingPanel == null)
         {
             Debug.LogError("LoadingScreenController: loadingPanel is null");
         }
         else
         {
+            // Ensure the panel is initially hidden.
             loadingPanel.SetActive(false);
         }
     }
 
-    private void OnEnable()
+    private void OnDestroy()
     {
-        if (generator != null)
-        {
-            generator.OnMapGenerationStart += ShowLoading;
-            generator.OnMapGenerationComplete += HideLoading;
-        }
-    }
-
-    private void OnDisable()
-    {
+        // Unsubscribe from events when the object is destroyed
         if (generator != null)
         {
             generator.OnMapGenerationStart -= ShowLoading;
             generator.OnMapGenerationComplete -= HideLoading;
         }
     }
+    
+    // NOTE: OnEnable/OnDisable are no longer needed for subscription
 
     private void ShowLoading()
     {

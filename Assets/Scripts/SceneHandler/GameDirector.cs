@@ -28,7 +28,9 @@ public class RhythmGameDirector : MonoBehaviour
     public float shipMoveSpeed = 8f;
     [Tooltip("Optional delay before starting music")]
     public float startDelay = 1f;
-
+    public PlayerLocomotion playerLocomotion; 
+    [Header("Audio")]
+    public LaneHitSoundController hitSoundController;
     [Header("Debug")]
     public bool autoStartOnMapReady = true;
 
@@ -79,11 +81,21 @@ public class RhythmGameDirector : MonoBehaviour
         }
     }
 
+
     private void OnMapReady()
     {
         notes = mapGenerator.mapNotes;
         notes.Sort((a, b) => a.time.CompareTo(b.time));
+        if (playerLocomotion != null)
+        {
+            playerLocomotion.allLaneXPositions = laneXPositions;
         
+            // IMPORTANT: Set the player's initial position to the first lane's official X position
+            Vector3 initialPos = playerLocomotion.transform.position;
+            initialPos.x = laneXPositions[playerLocomotion.currentLane];
+            playerLocomotion.transform.position = initialPos;
+        }
+    
         Debug.Log($"[Director] Map ready with {notes.Count} notes. Lanes: {mapGenerator.lanes}");
         
         if (autoStartOnMapReady)
@@ -94,12 +106,17 @@ public class RhythmGameDirector : MonoBehaviour
 
     private IEnumerator StartGameRoutine()
     {
-        yield return new WaitForSeconds(startDelay);
-        
+        // Ensure all ship movement is complete before the first note (if necessary)
+        // The Update() loop handles ship movement, but we can reset targets here.
+        ResetShips(); 
+    
+        // Give the user/system time to prepare
+        yield return new WaitForSeconds(startDelay); 
+    
         musicSource.Play();
         isPlaying = true;
         nextNoteIndex = 0;
-        
+    
         Debug.Log("[Director] Game started!");
     }
 
@@ -142,17 +159,42 @@ public class RhythmGameDirector : MonoBehaviour
 
     private void SpawnNote(EMapNote note)
     {
-        // === RANDOMLY PICK A SHIP ===
-        Transform[] ships = new Transform[] { leftShip, centerShip, rightShip };
-        int randomIndex = Random.Range(0, ships.Length);
-        Transform sourceShip = ships[randomIndex];
+        Transform sourceShip;
+        int targetLane = note.lane;
 
-        float targetX = laneXPositions[note.lane];
+        // === DETERMINISTICALLY PICK A SHIP BASED ON LANE ===
+        if (targetLane <= 1)
+        {
+            // Lanes 0, 1 -> Left Ship
+            sourceShip = leftShip;
+        }
+        else if (targetLane == 2)
+        {
+            // Lane 2 -> Center Ship
+            sourceShip = centerShip;
+        }
+        else // (targetLane >= 3)
+        {
+            // Lanes 3, 4 -> Right Ship
+            sourceShip = rightShip;
+        }
+
+        float targetX = laneXPositions[targetLane];
 
         // === UPDATE SHIP TARGET ===
-        if (sourceShip == leftShip) leftShipTargetX = targetX;
-        else if (sourceShip == centerShip) centerShipTargetX = targetX;
-        else if (sourceShip == rightShip) rightShipTargetX = targetX;
+        // This part remains, but is now controlled by the deterministic logic
+        if (sourceShip == leftShip) 
+        {
+            leftShipTargetX = targetX;
+        }
+        else if (sourceShip == centerShip) 
+        {
+            centerShipTargetX = targetX;
+        }
+        else if (sourceShip == rightShip) 
+        {
+            rightShipTargetX = targetX;
+        }
 
         // === CHOOSE PREFAB ===
         GameObject prefab = (note.type == NoteType.Heavy) ? redCubePrefab : yellowCubePrefab;
@@ -173,6 +215,12 @@ public class RhythmGameDirector : MonoBehaviour
         data.noteType = note.type;
         data.lane = note.lane;
         data.power = note.power;
+        
+        EnemyCollision collisionHandler = cube.GetComponent<EnemyCollision>();
+        if (collisionHandler != null)
+        {
+            collisionHandler.hitController = hitSoundController; // Pass the reference
+        }
     }
 
 
