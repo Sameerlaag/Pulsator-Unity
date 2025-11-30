@@ -53,6 +53,7 @@
     <Compile Include="Assets\Scripts\SceneHandler\GameDirector.cs" />
     <Compile Include="Assets\Scripts\PlayerManager\PlayerLocomotion.cs" />
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\ChassisController.cs" />
+    <Compile Include="Assets\Scripts\SceneHandler\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\PlayerManager\PlayerInputs.cs" />
     <Compile Include="Assets\Scripts\AudioHandler\FFTUtility.cs" />
     <Compile Include="Assets\Suggo Creations\RETROWAVE SKIES Lite\Scripts\GetGlobalMatrixLite.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\RotateCamera.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\RetrowaveTerrain.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\LoadingScreen.cs" />
+    <Compile Include="Assets\HONETi\mobile_cartoon_GUI\Scripts\switch_scenes.cs" />
     <Compile Include="Assets\Scripts\AudioHandler\AudioMapGenerator.cs" />
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\AudioHandler\RythmeAnalyzer.cs" />

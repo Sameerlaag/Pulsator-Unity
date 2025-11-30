@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class RhythmGameDirector : MonoBehaviour
 {
@@ -34,6 +37,8 @@ public class RhythmGameDirector : MonoBehaviour
     [Header("Debug")]
     public bool autoStartOnMapReady = true;
 
+    private int score = 0;
+
     private List<EMapNote> notes;
     private int nextNoteIndex = 0;
     private bool isPlaying = false;
@@ -48,9 +53,25 @@ public class RhythmGameDirector : MonoBehaviour
     private float leftShipTargetX;
     private float centerShipTargetX;
     private float rightShipTargetX;
+    
+    [Header("Ranking System")]
+    public ScoreManager scoreManager;
+    public TMP_Text leaderboardText;
 
+
+    [Header("UI")]
+    public GameObject scorePanel;     
+    public GameObject gameOverPanel;     // The whole panel (with dark background image)
+    public TMP_Text sideScoreText;       // Active during gameplay
+    public TMP_Text finalScoreText;      // Active when game ends
+    public Button playAgainButton;         
+    
     private void Start()
     {
+        // disable game over UI 
+        finalScoreText.gameObject.SetActive(false);
+        gameOverPanel.SetActive(false);
+        
         // Store default ship positions
         defaultLeftPos = leftShip.position;
         defaultCenterPos = centerShip.position;
@@ -106,17 +127,27 @@ public class RhythmGameDirector : MonoBehaviour
 
     private IEnumerator StartGameRoutine()
     {
-        // Ensure all ship movement is complete before the first note (if necessary)
-        // The Update() loop handles ship movement, but we can reset targets here.
-        ResetShips(); 
-    
-        // Give the user/system time to prepare
-        yield return new WaitForSeconds(startDelay); 
-    
+        ResetShips();
+        score = 0;
+
+        // UI at game start
+        sideScoreText.gameObject.SetActive(true);
+        scorePanel.SetActive(true);
+        sideScoreText.text = "Score: " + score;
+
+        
+        // disable game over UI 
+        finalScoreText.gameObject.SetActive(false);
+        gameOverPanel.SetActive(false);
+        playAgainButton.gameObject.SetActive(false);
+
+
+        yield return new WaitForSeconds(startDelay);
+
         musicSource.Play();
         isPlaying = true;
         nextNoteIndex = 0;
-    
+
         Debug.Log("[Director] Game started!");
     }
 
@@ -154,8 +185,51 @@ public class RhythmGameDirector : MonoBehaviour
         {
             isPlaying = false;
             Debug.Log("[Director] Song finished!");
+            OnGameOver();
         }
     }
+    private void OnGameOver()
+    {
+        Debug.Log("[Director] Game Over!");
+
+        // Hide gameplay UI
+        sideScoreText.gameObject.SetActive(false);
+
+        // Add score to leaderboard
+        scoreManager.AddScore(score);
+
+        // Show game over UI
+        scorePanel.SetActive(true);
+        gameOverPanel.SetActive(true);
+        finalScoreText.gameObject.SetActive(true);
+        playAgainButton.gameObject.SetActive(true);
+
+        finalScoreText.text = "Final Score: " + score;
+
+        UpdateLeaderboardDisplay();
+    }
+    private void UpdateLeaderboardDisplay()
+    {
+        List<ScoreEntry> list = scoreManager.topScores;
+        leaderboardText.text = "";
+
+        foreach (var entry in list)
+        {
+            bool isPlayerScore = entry.score == score;
+
+            if (isPlayerScore)
+            {
+                leaderboardText.text += $"<size=150%><b>{entry.score}</b></size>\n"
+                                        + $"<size=70%>{entry.date}</size>\n\n";
+            }
+            else
+            {
+                leaderboardText.text += $"{entry.score}\n"
+                                        + $"<size=70%>{entry.date}</size>\n\n";
+            }
+        }
+    }
+
 
     private void SpawnNote(EMapNote note)
     {
@@ -201,13 +275,15 @@ public class RhythmGameDirector : MonoBehaviour
 
         // === SPAWN CUBE ===
         GameObject cube = Instantiate(prefab, sourceShip.position, Quaternion.identity);
-
         Vector3 startPos = sourceShip.position;
         Vector3 endPos = new Vector3(targetX, playerShip.position.y, playerShip.position.z);
 
         NoteMover mover = cube.GetComponent<NoteMover>();
         if (mover == null)
+        {
             mover = cube.AddComponent<NoteMover>();
+            
+        }
 
         mover.Initialize(startPos, endPos, noteTravelTime);
 
@@ -220,6 +296,7 @@ public class RhythmGameDirector : MonoBehaviour
         if (collisionHandler != null)
         {
             collisionHandler.hitController = hitSoundController; // Pass the reference
+            collisionHandler.gameDirector = this;
         }
     }
 
@@ -272,4 +349,15 @@ public class RhythmGameDirector : MonoBehaviour
             Gizmos.DrawLine(start, end);
         }
     }
+
+    public void updateScore(int i)
+    {
+        score += i;
+        sideScoreText.text = score.ToString();
+    }
+    public void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
 }

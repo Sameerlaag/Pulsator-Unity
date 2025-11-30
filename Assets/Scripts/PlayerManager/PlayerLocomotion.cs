@@ -13,37 +13,40 @@ public class PlayerLocomotion : MonoBehaviour
     private int targetLane = 0;
     public float laneOffset = 2.5f;
     
-    // Updated to use the definitive external lane positions
     [HideInInspector] public float[] allLaneXPositions;
     private float referenceZ;
 
     [Header("Movement Settings")] 
-    public float moveSpeed = 10f;
-    public float acceleration = 40f; // Note: Acceleration is unused with Lerp movement
-    public float stopThreshold = 0.05f;
-
-    [Header("Spin Settings")] 
-    public float spinSpeed = 800f;
-    private bool doSpin = false;
-
+    public float moveSpeed = 15f;
+    public float arrivalThreshold = 0.02f;
+    
+    [Header("Spin Settings")]
+    public float redirectionSpinSpeed = 720f; // Spin speed when changing direction mid-flight
+    public float normalSpinSpeed = 360f; // Spin speed for regular 2+ lane jumps
+    public float spinDecaySpeed = 5f; // How fast spin slows down after reaching target
+    
     private Queue<int> moveQueue = new Queue<int>();
     private bool isMoving = false;
-    private Vector3 moveTarget;
-
-    private float queueTimer = 0f;
-    private float queueTimeout = 0.3f;
+    private Vector3 startPosition;
+    private Vector3 targetPosition;
+    private float moveProgress = 0f;
     
-    // Added for clear lane boundary check
+    // Input buffering
+    private float lastInputTime = 0f;
+    private float inputBufferWindow = 0.5f;
+    
     private int minLaneIndex = 0;
     private int maxLaneIndex = 4;
-
+    
+    private int currentMoveDirection = 0; // -1 left, 1 right, 0 none
+    private float currentSpinVelocity = 0f; // Current Z-axis rotation speed
+    private bool isRedirecting = false;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY;
         
-        // Removed referenceX as we now use allLaneXPositions
         referenceZ = transform.position.z; 
         
         inputs = GetComponent<PlayerInputManager>();
@@ -59,145 +62,189 @@ public class PlayerLocomotion : MonoBehaviour
 
     void FixedUpdate()
     {
-        // Must ensure lane positions are initialized before attempting to move
         if (allLaneXPositions == null || allLaneXPositions.Length == 0) return;
         
-        // Countdown queue timer and clear if expired
-        if (queueTimer > 0f)
+        // Clear old inputs outside buffer window
+        if (Time.time - lastInputTime > inputBufferWindow && !isMoving)
         {
-            queueTimer -= Time.fixedDeltaTime;
-            if (queueTimer <= 0f)
-            {
-                // Optionally clear the entire queue if the player hesitates
-                moveQueue.Clear(); 
-            }
+            moveQueue.Clear();
+            currentMoveDirection = 0;
         }
 
         if (!isMoving && moveQueue.Count > 0)
             StartNextMove();
 
         if (isMoving)
-            MoveTowardTarget();
+            UpdateMovement();
+        else
+            UpdateIdleRotation();
     }
 
     private void StartNextMove()
     {
         int direction = moveQueue.Dequeue();
         
-        // Calculate potential target based on current lane
-        int tempTargetLane = currentLane + direction; 
+        // Check if this is a redirection (changing direction mid-flight)
+        if (isMoving && currentMoveDirection != 0 && direction != currentMoveDirection)
+        {
+            isRedirecting = true;
+            // Apply spin in the direction of the new movement
+            currentSpinVelocity = direction * redirectionSpinSpeed;
+            Debug.Log($"Redirecting! Spin velocity: {currentSpinVelocity}");
+        }
         
-        // Use the defined lane boundaries
+        currentMoveDirection = direction;
+        
+        int tempTargetLane = currentLane + direction;
         targetLane = Mathf.Clamp(tempTargetLane, minLaneIndex, maxLaneIndex);
         
-        // Only start moving if the move is actually possible
         if (targetLane != currentLane)
         {
-             // Use the officially assigned X position for the move target
-            moveTarget = new Vector3(allLaneXPositions[targetLane], transform.position.y, referenceZ);
+            startPosition = transform.position;
+            targetPosition = new Vector3(allLaneXPositions[targetLane], transform.position.y, referenceZ);
             
-            // Spin only if jumping two lanes or more, although StartNextMove should only handle single steps
-            doSpin = Mathf.Abs(targetLane - currentLane) >= 2; 
+            int totalDistance = Mathf.Abs(targetLane - currentLane);
+            
+            // If not redirecting and jumping 2+ lanes, apply normal spin
+            if (!isRedirecting && totalDistance >= 2)
+            {
+                currentSpinVelocity = direction * normalSpinSpeed;
+            }
+            
+            moveProgress = 0f;
             isMoving = true;
-            Debug.Log($"Starting move from {currentLane} to {targetLane}, Spin: {doSpin}");
-        }
-        else
-        {
-            // If the move was invalid (e.g., trying to move left from Lane 0), clear spin and mark as not moving
-            doSpin = false;
-            isMoving = false; 
         }
     }
 
-
-    private void MoveTowardTarget()
+    private void UpdateMovement()
     {
-        Vector3 currentPos = transform.position;
-        Vector3 targetPos = moveTarget;
+        // Smooth acceleration curve
+        moveProgress += moveSpeed * Time.fixedDeltaTime;
+        float t = Mathf.SmoothStep(0f, 1f, moveProgress);
+        
+        transform.position = Vector3.Lerp(startPosition, targetPosition, t);
 
-        // Smoothly interpolate toward the target
-        // NOTE: Using Lerp makes 'acceleration' header field irrelevant.
-        transform.position = Vector3.Lerp(currentPos, targetPos, moveSpeed * Time.fixedDeltaTime);
-
-        // Spin while moving
-        if (doSpin)
-            transform.Rotate(0, 0, spinSpeed * Time.fixedDeltaTime, Space.Self);
-
-        // Check if arrived (using stopThreshold for smooth interpolation exit)
-        if (Vector3.Distance(transform.position, targetPos) < stopThreshold)
+        // Apply Z-axis spin
+        if (Mathf.Abs(currentSpinVelocity) > 0.1f)
         {
-            // Snap exactly to target position
-            transform.position = targetPos;
+            transform.Rotate(0, 0, currentSpinVelocity * Time.fixedDeltaTime, Space.Self);
+            
+            // Gradually slow down spin as we approach target
+            if (moveProgress > 0.7f)
+            {
+                currentSpinVelocity = Mathf.Lerp(currentSpinVelocity, 0f, spinDecaySpeed * Time.fixedDeltaTime);
+            }
+        }
+
+        // Check arrival
+        if (Vector3.Distance(transform.position, targetPosition) < arrivalThreshold || moveProgress >= 1f)
+        {
+            transform.position = targetPosition;
             currentLane = targetLane;
-            isMoving = false;
+            
+            // Check if there's a queued move
+            bool hasChainedMove = false;
+            if (moveQueue.Count > 0)
+            {
+                int nextDirection = moveQueue.Peek();
+                
+                // Check if it's the same direction (smooth chain) or different (redirection)
+                if (nextDirection == currentMoveDirection)
+                {
+                    // Continue in same direction without stopping
+                    hasChainedMove = true;
+                    isMoving = false; // Will restart immediately
+                    isRedirecting = false;
+                }
+                else
+                {
+                    // Different direction = redirection on next move
+                    hasChainedMove = true;
+                    isMoving = false;
+                    // Don't reset isRedirecting yet - will be set in StartNextMove
+                }
+            }
+            
+            if (!hasChainedMove)
+            {
+                isMoving = false;
+                currentMoveDirection = 0;
+                isRedirecting = false;
+                // Spin will decay in UpdateIdleRotation
+            }
+        }
+    }
 
-            // Reset rotation so z always ends at 0
+    private void UpdateIdleRotation()
+    {
+        // Smoothly stop any remaining spin
+        if (Mathf.Abs(currentSpinVelocity) > 0.1f)
+        {
+            currentSpinVelocity = Mathf.Lerp(currentSpinVelocity, 0f, spinDecaySpeed * Time.fixedDeltaTime);
+            transform.Rotate(0, 0, currentSpinVelocity * Time.fixedDeltaTime, Space.Self);
+        }
+        else
+        {
+            currentSpinVelocity = 0f;
+            // Gradually normalize Z rotation to 0
             Vector3 euler = transform.rotation.eulerAngles;
-            transform.rotation = Quaternion.Euler(euler.x, euler.y, 0f);
-
-            // Reset spin flag
-            doSpin = false;
+            float zRot = euler.z;
+            if (zRot > 180f) zRot -= 360f;
+            
+            if (Mathf.Abs(zRot) > 0.1f)
+            {
+                float newZ = Mathf.Lerp(zRot, 0f, spinDecaySpeed * Time.fixedDeltaTime);
+                transform.rotation = Quaternion.Euler(euler.x, euler.y, newZ);
+            }
         }
     }
     
     private void HandleMoveInput(int direction)
     {
-        // 1. Cap the queue size
-        if (moveQueue.Count < 3)
+        lastInputTime = Time.time;
+        
+        // Cap queue size
+        if (moveQueue.Count < 4)
         {
             moveQueue.Enqueue(direction);
         }
 
-        // Start/reset queue timeout
-        if (queueTimer <= 0f)
-            queueTimer = queueTimeout;
-
-        // 2. Dynamic target update logic (only relevant if currently moving)
+        // Dynamic target update if moving in same direction
         if (isMoving && moveQueue.Count > 0)
         {
-            // Check if all queued inputs (including the new one) are the same direction
-            bool allSame = true;
-            int first = moveQueue.Peek();
+            bool allSameDirection = true;
+            int firstDir = moveQueue.Peek();
+            
             foreach (int move in moveQueue)
             {
-                if (move != first)
+                if (move != firstDir)
                 {
-                    allSame = false;
+                    allSameDirection = false;
                     break;
                 }
             }
 
-            if (allSame)
+            if (allSameDirection && firstDir == currentMoveDirection)
             {
-                // Calculate how many total steps forward we want to make
                 int stepsToTarget = moveQueue.Count;
-                int newTargetIndex = Mathf.Clamp(currentLane + (first * stepsToTarget), minLaneIndex, maxLaneIndex);
+                int newTargetIndex = Mathf.Clamp(currentLane + (firstDir * stepsToTarget), minLaneIndex, maxLaneIndex);
                 
-                // --- THE CRITICAL FIX ---
-                // We only perform the update if the new target is different from the OLD target.
-                // We must also consume the inputs that are now covered by the new target.
                 if (newTargetIndex != targetLane)
                 {
-                    // Calculate how many inputs we need to consume from the queue
                     int distanceCovered = Mathf.Abs(newTargetIndex - currentLane);
+                    int inputsToConsume = Mathf.Min(moveQueue.Count, distanceCovered);
                     
-                    // The queue length might be longer than the distance we can actually move
-                    int inputsToConsume = Mathf.Min(moveQueue.Count, distanceCovered); 
-                    
-                    // Consume the inputs that are now "part" of the single extended move
                     for (int i = 0; i < inputsToConsume; i++)
                     {
                         moveQueue.Dequeue();
                     }
 
-                    // Reset the target to the new, extended lane
+                    // Update target without resetting progress
                     targetLane = newTargetIndex;
-                    moveTarget = new Vector3(allLaneXPositions[targetLane], transform.position.y, referenceZ);
+                    targetPosition = new Vector3(allLaneXPositions[targetLane], transform.position.y, referenceZ);
                     
-                    // Check if the jump is 2 lanes or more from the STARTING position of the move
-                    doSpin = distanceCovered >= 2;
-                    
-                    Debug.Log($"Dynamic target update: {currentLane} -> {targetLane}, Spin: {doSpin}");
+                    // Don't change spin when extending in same direction
+                    Debug.Log($"Extending move: {currentLane} -> {targetLane}");
                 }
             }
         }

@@ -6,6 +6,7 @@ public class EnemyCollision : MonoBehaviour
     public int explosionPieces = 10;    // Number of fragments
     public float explosionForce = 3f;   // Push force
     public float pieceLifetime = 1f;    // How long pieces last
+    public RhythmGameDirector gameDirector;
 
     // 1. MUST be set by the Director when the cube is created
     [HideInInspector] public LaneHitSoundController hitController; 
@@ -33,7 +34,7 @@ public class EnemyCollision : MonoBehaviour
                 hitController.PlayHitSound(noteData.lane); 
             }
             // ----------------------
-            
+            gameDirector.updateScore(noteData.noteType == NoteType.Heavy ? 50 : 10);
             Explode();
             Destroy(gameObject); 
         }
