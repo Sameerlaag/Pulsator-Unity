@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class UFOLaneController : MonoBehaviour
 {
@@ -84,4 +85,28 @@ public class UFOLaneController : MonoBehaviour
             collisionHandler.gameDirector = gameDirector; 
         }
     }
+    public void MoveToInitialLane(float initialX, float duration)
+    {
+        StopAllCoroutines();
+        StartCoroutine(MoveToX(initialX, duration));
+    }
+
+    private IEnumerator MoveToX(float targetXPos, float duration)
+    {
+        float elapsed = 0f;
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = new Vector3(targetXPos, startPos.y, startPos.z);
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            transform.position = Vector3.Lerp(startPos, targetPos, t);
+            yield return null;
+        }
+
+        transform.position = targetPos;
+        this.targetX = targetXPos; // update targetX so Update() keeps moving smoothly
+    }
+
 }

@@ -11,22 +11,22 @@ public class RhythmGameDirector : MonoBehaviour
     [Header("Controllers")]
     // References to the three ship scripts, NOT the Transforms
     public UFOLaneController leftShipController;
+
     public UFOLaneController centerShipController;
     public UFOLaneController rightShipController;
 
-    [Header("References")] 
-    public AudioMapGenerator mapGenerator;
+    [Header("References")] public AudioMapGenerator mapGenerator;
     public AudioSource musicSource;
-    public Transform playerShip; 
+    public Transform playerShip;
 
-    [Header("Game Settings")] 
-    [Tooltip("How many seconds it takes for a cube to fly from Ship to Player")]
+    [Header("Game Settings")] [Tooltip("How many seconds it takes for a cube to fly from Ship to Player")]
     public float noteTravelTime = 2.0f;
-    
+
     [Tooltip("Distance between lanes")] public float laneWidth = 2.5f;
 
     [Tooltip("Optional delay before starting music")]
     public float startDelay = 1f;
+
     private float directorTime = 0f;
     private bool startedMusic = false;
 
@@ -42,21 +42,22 @@ public class RhythmGameDirector : MonoBehaviour
 
     // Lane positions 
     private float[] laneXPositions;
-    
+
     // ... (UI and Leaderboard setup remains the same) ...
     [Header("Ranking System")] public ScoreManager scoreManager;
     public TMP_Text leaderboardText;
 
     [Header("UI")] public GameObject scorePanel;
-    public GameObject gameOverPanel; 
-    public TMP_Text sideScoreText; 
-    public TMP_Text finalScoreText; 
+    public GameObject gameOverPanel;
+    public TMP_Text sideScoreText;
+    public TMP_Text finalScoreText;
     public Button playAgainButton;
     [Header("Main Menu")] public GameObject mainMenuPanel;
     public bool requireStartClick = true;
     private bool hasStarted = false;
-    
-    
+    private bool hasEnded = false;
+
+
     private void Start()
     {
         // ... (UI setup) ...
@@ -105,7 +106,7 @@ public class RhythmGameDirector : MonoBehaviour
             Debug.LogError("[Director] Missing a UFOLaneController reference!");
         }
     }
-    
+
     private void OnMapReady()
     {
         notes = mapGenerator.mapNotes;
@@ -145,10 +146,10 @@ public class RhythmGameDirector : MonoBehaviour
 
     private IEnumerator StartGameRoutine()
     {
-        ResetShips(); // Now calls the new method
+        ResetShips(); // reset positions to overlap center
         score = 0;
 
-        // Show gameplay UI
+        // Show UI
         sideScoreText.gameObject.SetActive(true);
         finalScoreText.gameObject.SetActive(false);
         gameOverPanel.SetActive(false);
@@ -156,12 +157,20 @@ public class RhythmGameDirector : MonoBehaviour
         scorePanel.SetActive(true);
         sideScoreText.text = "0";
 
+        // === INITIAL SHIP ANIMATION ===
+        float moveDuration = 0.3f; // 0.2–0.3 sec is fast enough
+        leftShipController.MoveToInitialLane(laneXPositions[0], moveDuration);
+        centerShipController.MoveToInitialLane(laneXPositions[2], moveDuration);
+        rightShipController.MoveToInitialLane(laneXPositions[4], moveDuration);
+
+        // Wait until they reach lanes
+        yield return new WaitForSeconds(moveDuration);
+
         directorTime = 0f;
         startedMusic = false;
         isPlaying = true;
-
-        yield return null; 
     }
+
 
     private void Update()
     {
@@ -181,12 +190,12 @@ public class RhythmGameDirector : MonoBehaviour
             return;
 
         float musicTime = musicSource.timeSamples / (float)musicSource.clip.frequency;
-        float spawnTime = musicTime + noteTravelTime; 
+        float spawnTime = musicTime + noteTravelTime;
 
         while (nextNoteIndex < notes.Count && notes[nextNoteIndex].time <= spawnTime)
         {
             // NEW: Delegate spawning to the correct ship controller
-            SpawnNote(notes[nextNoteIndex]); 
+            SpawnNote(notes[nextNoteIndex]);
             nextNoteIndex++;
         }
 
@@ -234,6 +243,7 @@ public class RhythmGameDirector : MonoBehaviour
         finalScoreText.text = "Final Score: " + score;
 
         UpdateLeaderboardDisplay();
+        hasEnded =  true;
     }
 
     private void UpdateLeaderboardDisplay()
@@ -263,29 +273,25 @@ public class RhythmGameDirector : MonoBehaviour
     {
         int targetLane = note.lane;
 
-        // === DETERMINISTICALLY PICK A SHIP BASED ON LANE (Lanes 0-4) ===
         UFOLaneController shipToUse;
-        
+
+        // Decide which ship fires
         if (targetLane <= 1)
-        {
-            // Lanes 0, 1 -> Left Ship
             shipToUse = leftShipController;
-        }
         else if (targetLane == 2)
-        {
-            // Lane 2 -> Center Ship
             shipToUse = centerShipController;
-        }
-        else // (targetLane >= 3)
-        {
-            // Lanes 3, 4 -> Right Ship
+        else
             shipToUse = rightShipController;
-        }
-        
-        // Delegate the spawning and movement logic to the chosen ship controller
+
+        // Reset the other two ships
+        if (shipToUse != leftShipController) leftShipController.ResetShipPosition();
+        if (shipToUse != centerShipController) centerShipController.ResetShipPosition();
+        if (shipToUse != rightShipController) rightShipController.ResetShipPosition();
+
+        // Fire the note
         shipToUse.SpawnNote(note);
     }
-    
+
 
     [ContextMenu("Reset Ships")]
     public void ResetShips()
@@ -326,6 +332,7 @@ public class RhythmGameDirector : MonoBehaviour
 
     public void RestartScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (hasEnded)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

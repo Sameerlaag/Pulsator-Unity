@@ -5,10 +5,12 @@ public class PlayerInputManager : MonoBehaviour, PlayerInputs.IDefaultActions
 {
     private PlayerInputs inputs;
 
+    public RhythmGameDirector director;
+
     // Events for clean communication
     public System.Action<int> OnMoveInput; // -1 for left, +1 for right
     public int PressedColor { get; private set; }
- 
+
     void Awake()
     {
         inputs = new PlayerInputs();
@@ -33,9 +35,9 @@ public class PlayerInputManager : MonoBehaviour, PlayerInputs.IDefaultActions
         // ONLY trigger on performed (button press), not started/canceled
         if (!context.performed)
             return;
-        
+
         float value = context.ReadValue<float>();
-        
+
         // Convert to discrete direction
         if (Mathf.Abs(value) > 0.1f) // Deadzone
         {
@@ -63,6 +65,14 @@ public class PlayerInputManager : MonoBehaviour, PlayerInputs.IDefaultActions
         SetColor(context, 3);
     }
 
+    public void OnStart(InputAction.CallbackContext context)
+    {
+        if (context.canceled)
+            return;
+        director.StartGameFromMenu();
+        director.RestartScene();
+    }
+
     private void SetColor(InputAction.CallbackContext context, int colorNumber)
     {
         if (context.performed)
@@ -70,7 +80,6 @@ public class PlayerInputManager : MonoBehaviour, PlayerInputs.IDefaultActions
             PressedColor = colorNumber;
         }
 
-        if (context.canceled)
-            PressedColor = 0;
+        PressedColor = 0;
     }
 }
