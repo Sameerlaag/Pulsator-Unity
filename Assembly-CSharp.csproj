@@ -57,6 +57,7 @@
     <Compile Include="Assets\Scripts\PlayerManager\PlayerInputs.cs" />
     <Compile Include="Assets\Scripts\AudioHandler\FFTUtility.cs" />
     <Compile Include="Assets\Suggo Creations\RETROWAVE SKIES Lite\Scripts\GetGlobalMatrixLite.cs" />
+    <Compile Include="Assets\Scripts\SceneHandler\UFOController.cs" />
     <Compile Include="Assets\Suggo Creations\RETROWAVE SKIES Lite\Readme Assets\Scripts\ReadmeLite.cs" />
     <Compile Include="Assets\Scripts\AudioHandler\MapData.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />

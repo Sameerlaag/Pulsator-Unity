@@ -8,88 +8,75 @@ using UnityEngine.UI;
 
 public class RhythmGameDirector : MonoBehaviour
 {
-   [Header("References")]
+    [Header("Controllers")]
+    // References to the three ship scripts, NOT the Transforms
+    public UFOLaneController leftShipController;
+    public UFOLaneController centerShipController;
+    public UFOLaneController rightShipController;
+
+    [Header("References")] 
     public AudioMapGenerator mapGenerator;
     public AudioSource musicSource;
+    public Transform playerShip; 
 
-    [Header("Ships")]
-    public Transform leftShip;
-    public Transform centerShip;
-    public Transform rightShip;
-    public Transform playerShip;
-
-    [Header("Prefabs")]
-    public GameObject yellowCubePrefab; // Standard (Shoot)
-    public GameObject redCubePrefab;    // Heavy (Dodge)
-
-    [Header("Game Settings")]
+    [Header("Game Settings")] 
     [Tooltip("How many seconds it takes for a cube to fly from Ship to Player")]
     public float noteTravelTime = 2.0f;
-    [Tooltip("Distance between lanes")]
-    public float laneWidth = 2.5f;
-    [Tooltip("How fast ships move to their target lane position")]
-    public float shipMoveSpeed = 8f;
+    
+    [Tooltip("Distance between lanes")] public float laneWidth = 2.5f;
+
     [Tooltip("Optional delay before starting music")]
     public float startDelay = 1f;
-    public PlayerLocomotion playerLocomotion; 
-    [Header("Audio")]
-    public LaneHitSoundController hitSoundController;
-    [Header("Debug")]
-    public bool autoStartOnMapReady = true;
+    private float directorTime = 0f;
+    private bool startedMusic = false;
+
+    public PlayerLocomotion playerLocomotion;
+    [Header("Audio")] public LaneHitSoundController hitSoundController;
+    [Header("Debug")] public bool autoStartOnMapReady = true;
 
     private int score = 0;
 
     private List<EMapNote> notes;
     private int nextNoteIndex = 0;
     private bool isPlaying = false;
-    
-    // Lane positions and ship targets
+
+    // Lane positions 
     private float[] laneXPositions;
-    private Vector3 defaultLeftPos;
-    private Vector3 defaultCenterPos;
-    private Vector3 defaultRightPos;
     
-    // Ship target tracking
-    private float leftShipTargetX;
-    private float centerShipTargetX;
-    private float rightShipTargetX;
-    
-    [Header("Ranking System")]
-    public ScoreManager scoreManager;
+    // ... (UI and Leaderboard setup remains the same) ...
+    [Header("Ranking System")] public ScoreManager scoreManager;
     public TMP_Text leaderboardText;
 
-
-    [Header("UI")]
-    public GameObject scorePanel;     
-    public GameObject gameOverPanel;     // The whole panel (with dark background image)
-    public TMP_Text sideScoreText;       // Active during gameplay
-    public TMP_Text finalScoreText;      // Active when game ends
-    public Button playAgainButton;         
+    [Header("UI")] public GameObject scorePanel;
+    public GameObject gameOverPanel; 
+    public TMP_Text sideScoreText; 
+    public TMP_Text finalScoreText; 
+    public Button playAgainButton;
+    [Header("Main Menu")] public GameObject mainMenuPanel;
+    public bool requireStartClick = true;
+    private bool hasStarted = false;
+    
     
     private void Start()
     {
-        // disable game over UI 
+        // ... (UI setup) ...
         finalScoreText.gameObject.SetActive(false);
         gameOverPanel.SetActive(false);
-        
-        // Store default ship positions
-        defaultLeftPos = leftShip.position;
-        defaultCenterPos = centerShip.position;
-        defaultRightPos = rightShip.position;
+        musicSource.Stop();
 
-        // Calculate lane X positions (centered around player)
+        // Calculate lane X positions
         laneXPositions = new float[mapGenerator.lanes];
         float playerX = playerShip.position.x;
-        
+
         for (int i = 0; i < laneXPositions.Length; i++)
         {
             laneXPositions[i] = playerX + ((i - 2) * laneWidth);
         }
 
-        // Initialize ship targets to their default positions
-        leftShipTargetX = leftShip.position.x;
-        centerShipTargetX = centerShip.position.x;
-        rightShipTargetX = rightShip.position.x;
+        // Initialize all Ship Controllers
+        InitializeShipController(leftShipController);
+        InitializeShipController(centerShipController);
+        InitializeShipController(rightShipController);
 
         // Wait for map generation
         if (mapGenerator != null)
@@ -102,83 +89,108 @@ public class RhythmGameDirector : MonoBehaviour
         }
     }
 
-
+    private void InitializeShipController(UFOLaneController controller)
+    {
+        if (controller != null)
+        {
+            controller.gameDirector = this;
+            controller.allLaneXPositions = laneXPositions;
+            controller.hitSoundController = hitSoundController;
+            controller.noteTravelTime = noteTravelTime;
+            controller.playerShip = playerShip;
+            // Awake handles default position, no need for an explicit Initialize here.
+        }
+        else
+        {
+            Debug.LogError("[Director] Missing a UFOLaneController reference!");
+        }
+    }
+    
     private void OnMapReady()
     {
         notes = mapGenerator.mapNotes;
         notes.Sort((a, b) => a.time.CompareTo(b.time));
+
         if (playerLocomotion != null)
         {
             playerLocomotion.allLaneXPositions = laneXPositions;
-        
-            // IMPORTANT: Set the player's initial position to the first lane's official X position
-            Vector3 initialPos = playerLocomotion.transform.position;
-            initialPos.x = laneXPositions[playerLocomotion.currentLane];
-            playerLocomotion.transform.position = initialPos;
+            Vector3 pos = playerLocomotion.transform.position;
+            pos.x = laneXPositions[playerLocomotion.currentLane];
+            playerLocomotion.transform.position = pos;
         }
-    
-        Debug.Log($"[Director] Map ready with {notes.Count} notes. Lanes: {mapGenerator.lanes}");
-        
-        if (autoStartOnMapReady)
+
+        Debug.Log($"[Director] Map ready with {notes.Count} notes.");
+
+        // If main menu required, do NOT auto start
+        if (requireStartClick)
         {
-            StartCoroutine(StartGameRoutine());
+            isPlaying = false;
+            return;
         }
+
+        // Otherwise run normally
+        if (autoStartOnMapReady)
+            StartCoroutine(StartGameRoutine());
+    }
+
+    public void StartGameFromMenu()
+    {
+        if (hasStarted) return;
+        isPlaying = true;
+        hasStarted = true;
+        mainMenuPanel.SetActive(false);
+
+        StartCoroutine(StartGameRoutine());
     }
 
     private IEnumerator StartGameRoutine()
     {
-        ResetShips();
+        ResetShips(); // Now calls the new method
         score = 0;
 
-        // UI at game start
+        // Show gameplay UI
         sideScoreText.gameObject.SetActive(true);
-        scorePanel.SetActive(true);
-        sideScoreText.text = "Score: " + score;
-
-        
-        // disable game over UI 
         finalScoreText.gameObject.SetActive(false);
         gameOverPanel.SetActive(false);
         playAgainButton.gameObject.SetActive(false);
+        scorePanel.SetActive(true);
+        sideScoreText.text = "0";
 
-
-        yield return new WaitForSeconds(startDelay);
-
-        musicSource.Play();
+        directorTime = 0f;
+        startedMusic = false;
         isPlaying = true;
-        nextNoteIndex = 0;
 
-        Debug.Log("[Director] Game started!");
-    }
-
-    [ContextMenu("Manual Start")]
-    public void ManualStart()
-    {
-        if (notes == null || notes.Count == 0)
-        {
-            Debug.LogError("[Director] No map loaded!");
-            return;
-        }
-        StartCoroutine(StartGameRoutine());
+        yield return null; 
     }
 
     private void Update()
     {
-        if (!isPlaying) return;
+        if (!isPlaying)
+            return;
 
-        // === SAMPLE-BASED TIMING (PERFECT SYNC) ===
-        float currentTime = musicSource.timeSamples / (float)musicSource.clip.frequency;
-        float spawnTime = currentTime + noteTravelTime;
+        // ... (Time tracking remains the same) ...
+        directorTime += Time.unscaledDeltaTime;
 
-        // Spawn all notes that should appear now
+        if (!startedMusic && directorTime >= startDelay)
+        {
+            startedMusic = true;
+            musicSource.Play();
+        }
+
+        if (!startedMusic)
+            return;
+
+        float musicTime = musicSource.timeSamples / (float)musicSource.clip.frequency;
+        float spawnTime = musicTime + noteTravelTime; 
+
         while (nextNoteIndex < notes.Count && notes[nextNoteIndex].time <= spawnTime)
         {
-            SpawnNote(notes[nextNoteIndex]);
+            // NEW: Delegate spawning to the correct ship controller
+            SpawnNote(notes[nextNoteIndex]); 
             nextNoteIndex++;
         }
 
-        // Smoothly move ships to their target X positions
-        UpdateShipPositions();
+        // Ship position updating is now handled independently in each UFOLaneController's Update
 
         // Stop when finished
         if (nextNoteIndex >= notes.Count && !musicSource.isPlaying)
@@ -188,6 +200,21 @@ public class RhythmGameDirector : MonoBehaviour
             OnGameOver();
         }
     }
+
+
+    [ContextMenu("Manual Start")]
+    public void ManualStart()
+    {
+        if (notes == null || notes.Count == 0)
+        {
+            Debug.LogError("[Director] No map loaded!");
+            return;
+        }
+
+        StartCoroutine(StartGameRoutine());
+    }
+
+
     private void OnGameOver()
     {
         Debug.Log("[Director] Game Over!");
@@ -208,6 +235,7 @@ public class RhythmGameDirector : MonoBehaviour
 
         UpdateLeaderboardDisplay();
     }
+
     private void UpdateLeaderboardDisplay()
     {
         List<ScoreEntry> list = scoreManager.topScores;
@@ -233,100 +261,39 @@ public class RhythmGameDirector : MonoBehaviour
 
     private void SpawnNote(EMapNote note)
     {
-        Transform sourceShip;
         int targetLane = note.lane;
 
-        // === DETERMINISTICALLY PICK A SHIP BASED ON LANE ===
+        // === DETERMINISTICALLY PICK A SHIP BASED ON LANE (Lanes 0-4) ===
+        UFOLaneController shipToUse;
+        
         if (targetLane <= 1)
         {
             // Lanes 0, 1 -> Left Ship
-            sourceShip = leftShip;
+            shipToUse = leftShipController;
         }
         else if (targetLane == 2)
         {
             // Lane 2 -> Center Ship
-            sourceShip = centerShip;
+            shipToUse = centerShipController;
         }
         else // (targetLane >= 3)
         {
             // Lanes 3, 4 -> Right Ship
-            sourceShip = rightShip;
+            shipToUse = rightShipController;
         }
-
-        float targetX = laneXPositions[targetLane];
-
-        // === UPDATE SHIP TARGET ===
-        // This part remains, but is now controlled by the deterministic logic
-        if (sourceShip == leftShip) 
-        {
-            leftShipTargetX = targetX;
-        }
-        else if (sourceShip == centerShip) 
-        {
-            centerShipTargetX = targetX;
-        }
-        else if (sourceShip == rightShip) 
-        {
-            rightShipTargetX = targetX;
-        }
-
-        // === CHOOSE PREFAB ===
-        GameObject prefab = (note.type == NoteType.Heavy) ? redCubePrefab : yellowCubePrefab;
-
-        // === SPAWN CUBE ===
-        GameObject cube = Instantiate(prefab, sourceShip.position, Quaternion.identity);
-        Vector3 startPos = sourceShip.position;
-        Vector3 endPos = new Vector3(targetX, playerShip.position.y, playerShip.position.z);
-
-        NoteMover mover = cube.GetComponent<NoteMover>();
-        if (mover == null)
-        {
-            mover = cube.AddComponent<NoteMover>();
-            
-        }
-
-        mover.Initialize(startPos, endPos, noteTravelTime);
-
-        NoteData data = cube.AddComponent<NoteData>();
-        data.noteType = note.type;
-        data.lane = note.lane;
-        data.power = note.power;
         
-        EnemyCollision collisionHandler = cube.GetComponent<EnemyCollision>();
-        if (collisionHandler != null)
-        {
-            collisionHandler.hitController = hitSoundController; // Pass the reference
-            collisionHandler.gameDirector = this;
-        }
+        // Delegate the spawning and movement logic to the chosen ship controller
+        shipToUse.SpawnNote(note);
     }
-
-
-    private void UpdateShipPositions()
-    {
-        // Smoothly interpolate ships to their target X positions
-        Vector3 leftPos = leftShip.position;
-        leftPos.x = Mathf.Lerp(leftPos.x, leftShipTargetX, shipMoveSpeed * Time.deltaTime);
-        leftShip.position = leftPos;
-
-        Vector3 centerPos = centerShip.position;
-        centerPos.x = Mathf.Lerp(centerPos.x, centerShipTargetX, shipMoveSpeed * Time.deltaTime);
-        centerShip.position = centerPos;
-
-        Vector3 rightPos = rightShip.position;
-        rightPos.x = Mathf.Lerp(rightPos.x, rightShipTargetX, shipMoveSpeed * Time.deltaTime);
-        rightShip.position = rightPos;
-    }
+    
 
     [ContextMenu("Reset Ships")]
     public void ResetShips()
     {
-        leftShip.position = defaultLeftPos;
-        centerShip.position = defaultCenterPos;
-        rightShip.position = defaultRightPos;
-        
-        leftShipTargetX = defaultLeftPos.x;
-        centerShipTargetX = defaultCenterPos.x;
-        rightShipTargetX = defaultRightPos.x;
+        // Tell each ship controller to reset itself
+        leftShipController.ResetShipPosition();
+        centerShipController.ResetShipPosition();
+        rightShipController.ResetShipPosition();
     }
 
     private void OnDestroy()
@@ -350,14 +317,15 @@ public class RhythmGameDirector : MonoBehaviour
         }
     }
 
+// The rest of the methods are unchanged
     public void updateScore(int i)
     {
         score += i;
         sideScoreText.text = score.ToString();
     }
+
     public void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-
 }
