@@ -2006,7 +2006,7 @@ MonoBehaviour:
   m_IsGlobal: 0
   priority: 2
   blendDistance: 50
-  weight: 0.282
+  weight: 0.221
   sharedProfile: {fileID: 11400000, guid: 7f58427047d65984b93ea782e9748c7d, type: 2}
 --- !u!65 &1307343056
 BoxCollider:
@@ -2406,7 +2406,6 @@ MonoBehaviour:
   allLaneXPositions: []
   moveSpeed: 10
   arrivalThreshold: 0.02
-  spinSpeed: 300
 --- !u!136 &1411247563
 CapsuleCollider:
   m_ObjectHideFlags: 0
