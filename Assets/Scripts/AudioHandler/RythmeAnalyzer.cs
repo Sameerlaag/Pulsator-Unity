@@ -152,20 +152,20 @@ public class RhythmAnalyzer : MonoBehaviour
     // 🔍 DEBUG GUI
     // ============================================================
 
-    private void OnGUI()
-    {
-        GUI.color = Color.white;
-        GUI.Label(new Rect(10, 10, 300, 25), "RHYTHM ANALYZER DEBUG");
-
-        for (int i = 0; i < 5; i++)
-        {
-            string text =
-                $"Lane {i}:  " +
-                $"Band={bands[i]:F4}   " +
-                $"Peak={(peaks[i] ? "YES" : "no")}   " +
-                $"Power={intensities[i]}";
-
-            GUI.Label(new Rect(10, 40 + i * 20, 400, 20), text);
-        }
-    }
+    // private void OnGUI()
+    // {
+    //     GUI.color = Color.white;
+    //     GUI.Label(new Rect(10, 10, 300, 25), "RHYTHM ANALYZER DEBUG");
+    //
+    //     for (int i = 0; i < 5; i++)
+    //     {
+    //         string text =
+    //             $"Lane {i}:  " +
+    //             $"Band={bands[i]:F4}   " +
+    //             $"Peak={(peaks[i] ? "YES" : "no")}   " +
+    //             $"Power={intensities[i]}";
+    //
+    //         GUI.Label(new Rect(10, 40 + i * 20, 400, 20), text);
+    //     }
+    // }
 }
