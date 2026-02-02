@@ -347,7 +347,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 758756287}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RhythmGameDirector, Assembly-CSharp
         m_MethodName: StartGameFromMenu
         m_Mode: 1
@@ -995,6 +995,269 @@ MonoBehaviour:
   fadeRadius: 15
   maxRadius: 20
   updateInterval: 1
+  terrain: {fileID: 0}
+  terrainData: {fileID: 0}
+  heightmapWidth: 0
+  heightmapHeight: 0
+  spectrumData:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  frameCount: 0
+  playerPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &355056441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1002,7 +1265,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355056435}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f21546e37f6d4091bb51c99100f4d1d6, type: 3}
   m_Name: 
@@ -1029,7 +1292,7 @@ LODGroup:
   m_AnimateCrossFading: 0
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.060112767
+  - screenRelativeHeight: 0.6333
     fadeTransitionWidth: 0
     renderers: []
   - screenRelativeHeight: 0.3
@@ -1039,6 +1302,37 @@ LODGroup:
     fadeTransitionWidth: 0
     renderers: []
   m_Enabled: 1
+--- !u!1 &401217587
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 401217588}
+  m_Layer: 0
+  m_Name: Lane (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &401217588
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401217587}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 873588420}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,7 +1551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &493320536
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1385,6 +1679,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5627451878150353021, guid: 495d60f0ae8f743379044f1fc477386d, type: 3}
   m_PrefabInstance: {fileID: 99834929}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &591169519 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6131727698985095592, guid: 495d60f0ae8f743379044f1fc477386d, type: 3}
+  m_PrefabInstance: {fileID: 99834929}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &591169521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1394,18 +1693,73 @@ MonoBehaviour:
   m_GameObject: {fileID: 591169518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98b57f216e24194b7ce7f7b9c5c85de, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ec8aa4f640c48e6a80d0fea2a81d466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipID: 1
-  moveSpeed: 8
-  yellowCubePrefab: {fileID: 1003512098394480909, guid: 910c233228074b846be9eb2b9db60978, type: 3}
-  redCubePrefab: {fileID: 3345147340148355696, guid: f49287088fddd36478e3edd92cf0cbbc, type: 3}
-  noteTravelTime: 2
-  playerShip: {fileID: 0}
-  hitSoundController: {fileID: 0}
-  gameDirector: {fileID: 0}
-  allLaneXPositions: []
+  laneSystem: {fileID: 758756291}
+  role: 0
+  moveSpeed: 15
+  moveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ufoRenderer: {fileID: 591169519}
+  shootEffect: {fileID: 0}
+  idleMaterial: {fileID: 2100000, guid: 131c0d4b89d294a529d2b25013be5e76, type: 2}
+  shootingMaterial: {fileID: 2100000, guid: 1e4fef8b84848a848af9d782802d6108, type: 2}
+  currentLane: 0
+  isMoving: 0
+--- !u!1 &620557253
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 620557254}
+  m_Layer: 0
+  m_Name: Lane (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &620557254
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620557253}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 873588420}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &701165146 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 18c8b90499310c74b85dc086d0d0fe8c, type: 3}
@@ -1420,8 +1774,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 758756288}
-  - component: {fileID: 758756287}
   - component: {fileID: 758756289}
+  - component: {fileID: 758756290}
+  - component: {fileID: 758756292}
+  - component: {fileID: 758756291}
   m_Layer: 0
   m_Name: Director
   m_TagString: Untagged
@@ -1429,39 +1785,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &758756287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 758756286}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c75f25da370b4328bce3e8369864bfb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftShipController: {fileID: 1625918968}
-  centerShipController: {fileID: 591169521}
-  rightShipController: {fileID: 2106473277}
-  mapGenerator: {fileID: 1588348308}
-  musicSource: {fileID: 1588348305}
-  playerShip: {fileID: 701165146}
-  noteTravelTime: 2
-  laneWidth: 2
-  startDelay: 1
-  playerLocomotion: {fileID: 1411247562}
-  hitSoundController: {fileID: 1838670189}
-  autoStartOnMapReady: 1
-  scoreManager: {fileID: 758756289}
-  leaderboardText: {fileID: 1584065637}
-  scorePanel: {fileID: 1725734664}
-  gameOverPanel: {fileID: 1952296333}
-  sideScoreText: {fileID: 1426303933}
-  finalScoreText: {fileID: 1357730914}
-  playAgainButton: {fileID: 1196816166}
-  mainMenuPanel: {fileID: 1406299763}
-  requireStartClick: 1
 --- !u!4 &758756288
 Transform:
   m_ObjectHideFlags: 0
@@ -1486,10 +1809,172 @@ MonoBehaviour:
   m_GameObject: {fileID: 758756286}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d851e6ef115745f19797ec6e6810afaf, type: 3}
+  m_Script: {fileID: 11500000, guid: 809051fffc824d9a9ae7021eb50bdc65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  topScores: []
+  osuFilePath: C:/Users/Sameer/Downloads/S1756 - osu! Beatmap Pack #1756/NicolArmarfi
+    - Teatime, Fast Forward (Sakurai Miyo) [Future].osu
+  targetMap: {fileID: 11400000, guid: 893d109b687154a47913f86bf066762b, type: 2}
+  targetLaneCount: 3
+  mappingMode: 4
+  customPattern: 0000000001000000000000000200000001000000
+  clearExistingNotes: 1
+  timeOffset: 0
+  audioFolder: C:\Users\Sameer\Downloads\S1756 - osu! Beatmap Pack #1756
+  autoAssignAudio: 1
+--- !u!82 &758756290
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758756286}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 22b8430c65d300e41bc359a0045a31e3, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &758756291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758756286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78c867a3d4f04d678b8d006e91486935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laneMarkers:
+  - {fileID: 620557254}
+  - {fileID: 1223595084}
+  - {fileID: 810808076}
+  - {fileID: 1945257068}
+  - {fileID: 401217588}
+  playerTransform: {fileID: 701165146}
+  laneXPositions:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  spawnDistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  playerTargetPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &758756292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758756286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5404341d86754dd0b4583bdc6150b2bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentMap: {fileID: 11400000, guid: 893d109b687154a47913f86bf066762b, type: 2}
+  musicSource: {fileID: 758756290}
+  laneSystem: {fileID: 758756291}
+  playerController: {fileID: 1411247564}
+  absorbUFO: {fileID: 1625918968}
+  shootUFO: {fileID: 591169521}
+  shieldUFO: {fileID: 2106473277}
+  noteCubePrefab: {fileID: 1003512098394480909, guid: 910c233228074b846be9eb2b9db60978, type: 3}
+  isPlaying: 0
+  songTime: 0
+  notesSpawned: 0
+  notesRemaining: 0
 --- !u!1 &771135817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1575,7 +2060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 371113297632144545, guid: fb9f44026c6cb46d985f0e74b3ac73fe, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -12.19
       objectReference: {fileID: 0}
     - target: {fileID: 371113297632144545, guid: fb9f44026c6cb46d985f0e74b3ac73fe, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1642,6 +2127,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 371113297632144545, guid: fb9f44026c6cb46d985f0e74b3ac73fe, type: 3}
   m_PrefabInstance: {fileID: 779646571}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &810808075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 810808076}
+  m_Layer: 0
+  m_Name: Lane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &810808076
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810808075}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 873588420}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,6 +2205,42 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &873588419
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 873588420}
+  m_Layer: 0
+  m_Name: Lanes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &873588420
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873588419}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 150, y: 2.82, z: 42.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 810808076}
+  - {fileID: 1945257068}
+  - {fileID: 1223595084}
+  - {fileID: 401217588}
+  - {fileID: 620557254}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1196816165
@@ -1755,7 +2307,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 758756287}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: RhythmGameDirector, Assembly-CSharp
         m_MethodName: RestartScene
         m_Mode: 1
@@ -1930,6 +2482,37 @@ RectTransform:
   m_AnchoredPosition: {x: -44, y: -89}
   m_SizeDelta: {x: 478.8101, y: 163.1203}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1223595083
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1223595084}
+  m_Layer: 0
+  m_Name: Lane (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1223595084
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223595083}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 873588420}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1287148159 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1515913758502514, guid: cbb9a9aa33bd98b45b6b78565aad1529, type: 3}
@@ -2376,36 +2959,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1411247561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1411247558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcbaba1ef73d8224ab2aa4dfe8328383, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  director: {fileID: 758756287}
---- !u!114 &1411247562
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1411247558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbadc9b1022f40c6bebb077b225b48f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentLane: 0
-  laneOffset: 2.5
-  allLaneXPositions: []
-  moveSpeed: 10
-  arrivalThreshold: 0.02
 --- !u!136 &1411247563
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2429,6 +2982,52 @@ CapsuleCollider:
   m_Height: 4.734834
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0.54445726}
+--- !u!114 &1411247564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411247558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 350004f6084a46a591ed2c515b3ee688, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  laneSystem: {fileID: 758756291}
+  rb: {fileID: 1411247560}
+  normalMoveSpeed: 8
+  dashMoveSpeed: 20
+  movementCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  bufferWindow: 0.3
+  maxBufferSize: 2
+  currentAction: 0
+  currentLane: 2
+  isMoving: 0
+  inputBuffer: []
 --- !u!1 &1426303931
 GameObject:
   m_ObjectHideFlags: 0
@@ -2779,13 +3378,10 @@ PrefabInstance:
       addedObject: {fileID: 1411247559}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 18c8b90499310c74b85dc086d0d0fe8c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1411247562}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 18c8b90499310c74b85dc086d0d0fe8c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1411247561}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 18c8b90499310c74b85dc086d0d0fe8c, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1411247563}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 18c8b90499310c74b85dc086d0d0fe8c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1411247564}
   m_SourcePrefab: {fileID: 100100000, guid: 18c8b90499310c74b85dc086d0d0fe8c, type: 3}
 --- !u!1001 &1507963713
 PrefabInstance:
@@ -3228,8 +3824,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1588348306}
   - component: {fileID: 1588348305}
-  - component: {fileID: 1588348308}
-  - component: {fileID: 1588348307}
   m_Layer: 0
   m_Name: Music Audio Source
   m_TagString: Untagged
@@ -3244,7 +3838,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588348304}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -3349,60 +3943,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2070838759}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1588348307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588348304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 666f5ff3ae26fec4e93fb4fa1948411f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSource: {fileID: 1588348305}
-  spectrumSize: 1024
-  fftWindow: 5
-  peakSensitivity: 1
-  baselineSmooth: 0.08
-  minIntensity: 0.005
-  maxIntensity: 0.05
-  spectrum: []
-  bands:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  peaks: 0000000000
-  intensities: 0000000000000000000000000000000000000000
---- !u!114 &1588348308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1588348304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c72bf747556e48bdb733d5c6fcddf7ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSource: {fileID: 1588348305}
-  sampleSize: 2048
-  BPM: 120
-  subdivisionsPerBeat: 2
-  beatOffset: 0
-  lanes: 5
-  minimumEnergy: 0.01
-  peakSensitivity: 1.2
-  useFrequencyMapping: 0
-  heavyNoteInterval: 8
-  laneChangeChance: 0.8
-  mapNotes: []
-  generateOnStart: 1
-  forceGenerate: 0
 --- !u!1001 &1625918964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3437,7 +3977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6532072339742288776, guid: cef6de11ad9c348f1902c4033bed1701, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 12.3
       objectReference: {fileID: 0}
     - target: {fileID: 6532072339742288776, guid: cef6de11ad9c348f1902c4033bed1701, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3501,18 +4041,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 1452542126}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98b57f216e24194b7ce7f7b9c5c85de, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ec8aa4f640c48e6a80d0fea2a81d466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipID: 0
-  moveSpeed: 8
-  yellowCubePrefab: {fileID: 1003512098394480909, guid: 910c233228074b846be9eb2b9db60978, type: 3}
-  redCubePrefab: {fileID: 3345147340148355696, guid: f49287088fddd36478e3edd92cf0cbbc, type: 3}
-  noteTravelTime: 2
-  playerShip: {fileID: 0}
-  hitSoundController: {fileID: 0}
-  gameDirector: {fileID: 0}
-  allLaneXPositions: []
+  laneSystem: {fileID: 758756291}
+  role: 0
+  moveSpeed: 15
+  moveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ufoRenderer: {fileID: 591169519}
+  shootEffect: {fileID: 0}
+  idleMaterial: {fileID: 2100000, guid: 131c0d4b89d294a529d2b25013be5e76, type: 2}
+  shootingMaterial: {fileID: 2100000, guid: 1e4fef8b84848a848af9d782802d6108, type: 2}
+  currentLane: 0
+  isMoving: 0
 --- !u!1 &1725734664
 GameObject:
   m_ObjectHideFlags: 0
@@ -3569,7 +4133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1838670188}
   - component: {fileID: 1838670190}
-  - component: {fileID: 1838670189}
   m_Layer: 0
   m_Name: Lane Hit Audio Source
   m_TagString: Untagged
@@ -3592,24 +4155,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2070838759}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1838670189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1838670187}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87468afbc44a43e9a8e32fd2273568db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  laneHitSounds:
-  - {fileID: 8300000, guid: d3c82dc6c5e1903478068922f2e8c7c6, type: 3}
-  - {fileID: 8300000, guid: d3c82dc6c5e1903478068922f2e8c7c6, type: 3}
-  - {fileID: 8300000, guid: d3c82dc6c5e1903478068922f2e8c7c6, type: 3}
-  - {fileID: 8300000, guid: d3c82dc6c5e1903478068922f2e8c7c6, type: 3}
-  - {fileID: 8300000, guid: d3c82dc6c5e1903478068922f2e8c7c6, type: 3}
 --- !u!82 &1838670190
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3829,7 +4374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b5b87be1f8f4791a69604a929a447da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generator: {fileID: 1588348308}
+  generator: {fileID: 0}
   loadingPanel: {fileID: 1943207119}
 --- !u!114 &1943207124
 MonoBehaviour:
@@ -3861,6 +4406,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1945257067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1945257068}
+  m_Layer: 0
+  m_Name: Lane (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1945257068
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945257067}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 873588420}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1952296333
 GameObject:
   m_ObjectHideFlags: 0
@@ -3986,18 +4562,42 @@ MonoBehaviour:
   m_GameObject: {fileID: 2106473274}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d98b57f216e24194b7ce7f7b9c5c85de, type: 3}
+  m_Script: {fileID: 11500000, guid: 9ec8aa4f640c48e6a80d0fea2a81d466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipID: 2
-  moveSpeed: 8
-  yellowCubePrefab: {fileID: 1003512098394480909, guid: 910c233228074b846be9eb2b9db60978, type: 3}
-  redCubePrefab: {fileID: 3345147340148355696, guid: f49287088fddd36478e3edd92cf0cbbc, type: 3}
-  noteTravelTime: 2
-  playerShip: {fileID: 0}
-  hitSoundController: {fileID: 0}
-  gameDirector: {fileID: 0}
-  allLaneXPositions: []
+  laneSystem: {fileID: 758756291}
+  role: 0
+  moveSpeed: 15
+  moveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  ufoRenderer: {fileID: 591169519}
+  shootEffect: {fileID: 0}
+  idleMaterial: {fileID: 2100000, guid: 131c0d4b89d294a529d2b25013be5e76, type: 2}
+  shootingMaterial: {fileID: 2100000, guid: 1e4fef8b84848a848af9d782802d6108, type: 2}
+  currentLane: 0
+  isMoving: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -4013,3 +4613,4 @@ SceneRoots:
   - {fileID: 493320539}
   - {fileID: 758756288}
   - {fileID: 2070838759}
+  - {fileID: 873588420}
