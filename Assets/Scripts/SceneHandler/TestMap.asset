@@ -1,0 +1,272 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0fc6869cac74278a95137740e8138a1, type: 3}
+  m_Name: TestMap
+  m_EditorClassIdentifier: 
+  mapName: NicolArmarfi - Teatime, Fast Forward
+  musicTrack: {fileID: 8300000, guid: c33363844faccac46b96a15c9e26da4f, type: 3}
+  bpm: 120
+  noteSpeed: 10
+  noteSpawnDistance: 50
+  notes:
+  - timestamp: 0.04
+    lane: 4
+    type: 1
+  - timestamp: 0.683
+    lane: 4
+    type: 1
+  - timestamp: 1.112
+    lane: 3
+    type: 0
+  - timestamp: 1.54
+    lane: 3
+    type: 0
+  - timestamp: 1.755
+    lane: 4
+    type: 1
+  - timestamp: 2.391
+    lane: 3
+    type: 0
+  - timestamp: 2.814
+    lane: 3
+    type: 0
+  - timestamp: 3.236
+    lane: 3
+    type: 0
+  - timestamp: 3.447
+    lane: 3
+    type: 0
+  - timestamp: 4.093
+    lane: 3
+    type: 0
+  - timestamp: 4.528
+    lane: 1
+    type: 1
+  - timestamp: 4.963
+    lane: 3
+    type: 0
+  - timestamp: 5.398
+    lane: 4
+    type: 1
+  - timestamp: 5.82
+    lane: 1
+    type: 1
+  - timestamp: 6.243
+    lane: 1
+    type: 1
+  - timestamp: 6.665
+    lane: 3
+    type: 0
+  - timestamp: 6.876
+    lane: 4
+    type: 1
+  - timestamp: 7.088
+    lane: 4
+    type: 1
+  - timestamp: 14.907
+    lane: 3
+    type: 0
+  - timestamp: 15.117
+    lane: 3
+    type: 0
+  - timestamp: 15.328
+    lane: 4
+    type: 1
+  - timestamp: 15.538
+    lane: 4
+    type: 1
+  - timestamp: 15.749
+    lane: 4
+    type: 1
+  - timestamp: 16.215
+    lane: 3
+    type: 0
+  - timestamp: 16.681
+    lane: 4
+    type: 1
+  - timestamp: 16.847
+    lane: 3
+    type: 0
+  - timestamp: 17.014
+    lane: 1
+    type: 1
+  - timestamp: 17.347
+    lane: 3
+    type: 0
+  - timestamp: 17.742
+    lane: 1
+    type: 1
+  - timestamp: 18.85
+    lane: 1
+    type: 1
+  - timestamp: 19.297
+    lane: 0
+    type: 0
+  - timestamp: 21.401
+    lane: 1
+    type: 1
+  - timestamp: 22.267
+    lane: 3
+    type: 0
+  - timestamp: 23.133
+    lane: 3
+    type: 0
+  - timestamp: 23.984
+    lane: 4
+    type: 1
+  - timestamp: 24.836
+    lane: 0
+    type: 0
+  - timestamp: 25.294
+    lane: 1
+    type: 1
+  - timestamp: 25.752
+    lane: 3
+    type: 0
+  - timestamp: 26.239
+    lane: 3
+    type: 0
+  - timestamp: 27.415
+    lane: 3
+    type: 0
+  - timestamp: 27.777
+    lane: 1
+    type: 1
+  - timestamp: 27.985
+    lane: 1
+    type: 1
+  - timestamp: 29.391
+    lane: 1
+    type: 1
+  - timestamp: 30.263
+    lane: 1
+    type: 1
+  - timestamp: 31.136
+    lane: 1
+    type: 1
+  - timestamp: 31.566
+    lane: 0
+    type: 0
+  - timestamp: 31.997
+    lane: 1
+    type: 1
+  - timestamp: 32.858
+    lane: 3
+    type: 0
+  - timestamp: 33.289
+    lane: 1
+    type: 1
+  - timestamp: 33.721
+    lane: 0
+    type: 0
+  - timestamp: 34.152
+    lane: 1
+    type: 1
+  - timestamp: 34.584
+    lane: 0
+    type: 0
+  - timestamp: 35.447
+    lane: 1
+    type: 1
+  - timestamp: 36.311
+    lane: 0
+    type: 0
+  - timestamp: 36.74
+    lane: 1
+    type: 1
+  - timestamp: 37.169
+    lane: 0
+    type: 0
+  - timestamp: 37.598
+    lane: 1
+    type: 1
+  - timestamp: 38.028
+    lane: 0
+    type: 0
+  - timestamp: 38.457
+    lane: 0
+    type: 0
+  - timestamp: 38.886
+    lane: 1
+    type: 1
+  - timestamp: 39.316
+    lane: 1
+    type: 1
+  - timestamp: 39.745
+    lane: 3
+    type: 0
+  - timestamp: 40.615
+    lane: 0
+    type: 0
+  - timestamp: 41.455
+    lane: 3
+    type: 0
+  - timestamp: 41.887
+    lane: 1
+    type: 1
+  - timestamp: 42.319
+    lane: 0
+    type: 0
+  - timestamp: 43.183
+    lane: 1
+    type: 1
+  - timestamp: 43.611
+    lane: 1
+    type: 1
+  - timestamp: 44.04
+    lane: 3
+    type: 0
+  - timestamp: 44.468
+    lane: 1
+    type: 1
+  - timestamp: 44.897
+    lane: 3
+    type: 0
+  - timestamp: 45.322
+    lane: 0
+    type: 0
+  - timestamp: 45.748
+    lane: 3
+    type: 0
+  - timestamp: 46.623
+    lane: 0
+    type: 0
+  - timestamp: 47.061
+    lane: 1
+    type: 1
+  - timestamp: 47.499
+    lane: 3
+    type: 0
+  - timestamp: 48.402
+    lane: 1
+    type: 1
+  - timestamp: 49.305
+    lane: 3
+    type: 0
+  - timestamp: 50.912
+    lane: 3
+    type: 0
+  - timestamp: 51.07
+    lane: 3
+    type: 0
+  - timestamp: 51.228
+    lane: 4
+    type: 1
+  - timestamp: 51.401
+    lane: 4
+    type: 1
+  - timestamp: 51.575
+    lane: 4
+    type: 1
+  - timestamp: 51.741
+    lane: 3
+    type: 0
