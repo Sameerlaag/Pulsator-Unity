@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace SceneHandler
@@ -9,6 +10,8 @@ namespace SceneHandler
         [SerializeField] private Material absorbMaterial;
         [SerializeField] private Material shootMaterial;
         [SerializeField] private Material shieldMaterial;
+        [SerializeField] private AudioSource noteAudio;
+        public AudioClip[] clipMap;
     
         private RhythmMapData.RhythmNote noteData;
         private float travelSpeed;
@@ -126,6 +129,7 @@ namespace SceneHandler
             gameManager?.OnNoteDestroyed(gameObject);
         
             // TODO: Add destruction effect/particle
+            if(noteAudio!=null) noteAudio.PlayOneShot(clipMap[(int) noteData.type]);
             Destroy(gameObject);
         }
     

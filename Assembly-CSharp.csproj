@@ -48,16 +48,20 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\PlayerManager\PlayerController.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\OsuManiaImporter.cs" />
+    <Compile Include="Assets\Scripts\SceneHandler\AudioDebugger.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\NoteCubeController.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\RhythmGameManager.cs" />
     <Compile Include="Assets\Scripts\PlayerManager\PlayerLocomotion.cs" />
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\ChassisController.cs" />
     <Compile Include="Assets\Scripts\PlayerManager\PlayerInputs.cs" />
+    <Compile Include="Assets\Scripts\SceneHandler\AudioListenerDiagnostic.cs" />
     <Compile Include="Assets\Suggo Creations\RETROWAVE SKIES Lite\Scripts\GetGlobalMatrixLite.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\OsuManiaParser.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\UFOController.cs" />
     <Compile Include="Assets\Suggo Creations\RETROWAVE SKIES Lite\Readme Assets\Scripts\ReadmeLite.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\RhythmMapEditor.cs" />
+    <Compile Include="Assets\Scripts\SceneHandler\UFOPositionManager.cs" />
+    <Compile Include="Assets\Scripts\SceneHandler\AudioFileComparer.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\RhythmMapData.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\PlayerManager\PlayerInputManager.cs" />
@@ -81,11 +85,13 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\Suggo Creations\RETROWAVE SKIES Lite\Shaders\Includes\MainLight.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Resources\PerformanceTestRunSettings.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\MyAssets\RetrowaveGrid.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\Resources\PerformanceTestRunInfo.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />

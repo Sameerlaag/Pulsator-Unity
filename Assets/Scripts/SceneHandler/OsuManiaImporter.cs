@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 using System.IO;
 using SceneHandler;
+using Random = UnityEngine.Random;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -57,7 +59,7 @@ public class OsuManiaImporter : MonoBehaviour
         AllShoot,         // Everything is shoot
         AllShield         // Everything is shield
     }
-    
+
     public void ImportOsuMap()
     {
         if (targetMap == null)
@@ -158,6 +160,8 @@ public class OsuManiaImporter : MonoBehaviour
         string searchPath = string.IsNullOrEmpty(audioFolder) 
             ? Path.GetDirectoryName(osuFilePath) 
             : audioFolder;
+        
+        Debug.Log("audioFilename "+ audioFilename);
         
         string audioPath = Path.Combine(searchPath, audioFilename);
         
