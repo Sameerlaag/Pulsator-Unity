@@ -19,44 +19,44 @@ MonoBehaviour:
   noteSpawnDistance: 50
   notes:
   - timestamp: 0.04
-    lane: 4
-    type: 1
+    lane: 3
+    type: 0
   - timestamp: 0.683
-    lane: 4
-    type: 1
+    lane: 3
+    type: 0
   - timestamp: 1.112
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 1.54
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 1.755
-    lane: 4
-    type: 1
+    lane: 3
+    type: 0
   - timestamp: 2.391
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 2.814
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 3.236
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 3.447
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 4.093
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 4.528
     lane: 1
     type: 1
   - timestamp: 4.963
+    lane: 2
+    type: 2
+  - timestamp: 5.398
     lane: 3
     type: 0
-  - timestamp: 5.398
-    lane: 4
-    type: 1
   - timestamp: 5.82
     lane: 1
     type: 1
@@ -64,44 +64,44 @@ MonoBehaviour:
     lane: 1
     type: 1
   - timestamp: 6.665
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 6.876
-    lane: 4
-    type: 1
+    lane: 3
+    type: 0
   - timestamp: 7.088
-    lane: 4
-    type: 1
+    lane: 3
+    type: 0
   - timestamp: 14.907
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 15.117
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 15.328
-    lane: 4
-    type: 1
+    lane: 3
+    type: 0
   - timestamp: 15.538
-    lane: 4
-    type: 1
+    lane: 3
+    type: 0
   - timestamp: 15.749
-    lane: 4
-    type: 1
+    lane: 3
+    type: 0
   - timestamp: 16.215
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 16.681
-    lane: 4
-    type: 1
-  - timestamp: 16.847
     lane: 3
     type: 0
+  - timestamp: 16.847
+    lane: 2
+    type: 2
   - timestamp: 17.014
     lane: 1
     type: 1
   - timestamp: 17.347
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 17.742
     lane: 1
     type: 1
@@ -115,14 +115,14 @@ MonoBehaviour:
     lane: 1
     type: 1
   - timestamp: 22.267
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 23.133
+    lane: 2
+    type: 2
+  - timestamp: 23.984
     lane: 3
     type: 0
-  - timestamp: 23.984
-    lane: 4
-    type: 1
   - timestamp: 24.836
     lane: 0
     type: 0
@@ -130,14 +130,14 @@ MonoBehaviour:
     lane: 1
     type: 1
   - timestamp: 25.752
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 26.239
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 27.415
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 27.777
     lane: 1
     type: 1
@@ -160,8 +160,8 @@ MonoBehaviour:
     lane: 1
     type: 1
   - timestamp: 32.858
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 33.289
     lane: 1
     type: 1
@@ -202,14 +202,14 @@ MonoBehaviour:
     lane: 1
     type: 1
   - timestamp: 39.745
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 40.615
     lane: 0
     type: 0
   - timestamp: 41.455
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 41.887
     lane: 1
     type: 1
@@ -223,20 +223,20 @@ MonoBehaviour:
     lane: 1
     type: 1
   - timestamp: 44.04
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 44.468
     lane: 1
     type: 1
   - timestamp: 44.897
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 45.322
     lane: 0
     type: 0
   - timestamp: 45.748
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 46.623
     lane: 0
     type: 0
@@ -244,29 +244,29 @@ MonoBehaviour:
     lane: 1
     type: 1
   - timestamp: 47.499
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 48.402
     lane: 1
     type: 1
   - timestamp: 49.305
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 50.912
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 51.07
-    lane: 3
-    type: 0
+    lane: 2
+    type: 2
   - timestamp: 51.228
-    lane: 4
-    type: 1
-  - timestamp: 51.401
-    lane: 4
-    type: 1
-  - timestamp: 51.575
-    lane: 4
-    type: 1
-  - timestamp: 51.741
     lane: 3
     type: 0
+  - timestamp: 51.401
+    lane: 3
+    type: 0
+  - timestamp: 51.575
+    lane: 3
+    type: 0
+  - timestamp: 51.741
+    lane: 2
+    type: 2

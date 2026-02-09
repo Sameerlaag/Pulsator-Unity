@@ -3,36 +3,39 @@ using System.Collections.Generic;
 using PlayerManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UI;
 
 namespace SceneHandler
 {
     /// <summary>
-    /// Updated Game Manager for 5-lane system with dynamic UFOs
+    /// Updated RhythmGameManager with BeatmapManager integration
     /// </summary>
     public class RhythmGameManager : MonoBehaviour
     {
-        [Header("References")] [SerializeField]
-        private RhythmMapData currentMap;
+        [Header("Manager References")]
+        [SerializeField] private MainMenuUIManager menuUIManager;
+        [SerializeField] private BeatmapManager beatmapManager;
 
+        [Header("Game References")]
+        [SerializeField] private RhythmMapData currentMap;
         [SerializeField] private AudioSource musicSource;
         [SerializeField] private LaneSystem laneSystem;
         [SerializeField] private PlayerController playerController;
 
         [Header("Manual Overrides")]
         [Tooltip("Override the song from the map (leave empty to use map's song)")]
-        [SerializeField]
-        private AudioClip manualSongOverride;
+        [SerializeField] private AudioClip manualSongOverride;
 
-        [Header("UFO Configuration")] [Tooltip("3 UFOs, one for each note type")] [SerializeField]
-        private UFOController absorbUFO;
-
+        [Header("UFO Configuration")]
+        [Tooltip("3 UFOs, one for each note type")]
+        [SerializeField] private UFOController absorbUFO;
         [SerializeField] private UFOController shootUFO;
         [SerializeField] private UFOController shieldUFO;
 
-        [Header("Prefabs")] [SerializeField] private GameObject noteCubePrefab;
+        [Header("Prefabs")]
+        [SerializeField] private GameObject noteCubePrefab;
 
         private bool isPlaying = false;
-
         [SerializeField] private float songTime = 0f;
         [SerializeField] private int notesSpawned = 0;
         [SerializeField] private int notesRemaining = 0;
@@ -40,84 +43,68 @@ namespace SceneHandler
         private Queue<RhythmMapData.RhythmNote> upcomingNotes = new Queue<RhythmMapData.RhythmNote>();
         private List<GameObject> activeNotes = new List<GameObject>();
         private bool isReady = false;
-        float sessionTime = 0f;
-        float leadInTime;
-        bool musicStarted = false;
+        private float sessionTime = 0f;
+        private float leadInTime;
+        private bool musicStarted = false;
 
         void Start()
         {
+            // Don't auto-start - wait for BeatmapManager and UI
+            Debug.Log("[GameManager] Waiting for beatmap initialization...");
+        }
+
+        /// <summary>
+        /// Called by MainMenuUIManager when a song is selected
+        /// </summary>
+        public void SetMapAndPrepare(RhythmMapData mapData)
+        {
+            currentMap = mapData;
             StartCoroutine(InitializeGame());
         }
 
         IEnumerator InitializeGame()
         {
-            Debug.Log("[GameManager] Initializing improved rhythm game...");
+            Debug.Log("[GameManager] Initializing rhythm game...");
 
-            // Validate
             if (!ValidateSetup())
             {
                 Debug.LogError("[GameManager] Setup validation failed!");
                 yield break;
             }
 
-            // Calculate lane system
             laneSystem.CalculateLaneSystem();
 
-            // Setup audio
             if (musicSource == null)
             {
                 musicSource = gameObject.AddComponent<AudioSource>();
             }
 
-            // Determine which audio clip to use
             AudioClip clipToUse = manualSongOverride != null ? manualSongOverride : currentMap.musicTrack;
 
             if (clipToUse == null)
             {
-                Debug.LogError("[GameManager] ❌ No audio clip available!");
-                Debug.LogError(
-                    "[GameManager] Either assign 'Manual Song Override' OR make sure your RhythmMapData has a music track");
+                Debug.LogError("[GameManager] No audio clip available!");
                 yield break;
             }
 
-            // Detailed audio logging
             Debug.Log("========== AUDIO SETUP ==========");
-            Debug.Log($"[GameManager] Source: {(manualSongOverride != null ? "Manual Override ✓" : "Map Track")}");
+            Debug.Log($"[GameManager] Map: {currentMap.mapName}");
             Debug.Log($"[GameManager] Clip: {clipToUse.name}");
             Debug.Log($"[GameManager] Length: {clipToUse.length:F2} seconds");
-            Debug.Log($"[GameManager] Channels: {clipToUse.channels}");
-            Debug.Log($"[GameManager] Frequency: {clipToUse.frequency}Hz");
-            Debug.Log($"[GameManager] Load State: {clipToUse.loadState}");
-            Debug.Log($"[GameManager] Samples: {clipToUse.samples}");
+            Debug.Log($"[GameManager] BPM: {currentMap.bpm:F1}");
+            Debug.Log("=================================");
 
-            if (clipToUse.length == 0)
-            {
-                Debug.LogError("[GameManager] ❌ CLIP LENGTH IS ZERO! File may be corrupted!");
-            }
-
-            if (clipToUse.loadState != AudioDataLoadState.Loaded)
-            {
-                Debug.LogWarning($"[GameManager] ⚠️ Clip not loaded! State: {clipToUse.loadState}");
-            }
-
-            // Configure AudioSource
             musicSource.clip = clipToUse;
             musicSource.playOnAwake = false;
-            musicSource.volume = 1f;
-            musicSource.spatialBlend = 0f; // 2D audio (important for music!)
+            musicSource.volume = PlayerPrefs.GetFloat("MusicVolume", 0.8f);
+            musicSource.spatialBlend = 0f;
             musicSource.mute = false;
             musicSource.loop = false;
 
-            Debug.Log($"[GameManager] AudioSource configured:");
-            Debug.Log($"  Volume: {musicSource.volume}");
-            Debug.Log($"  Muted: {musicSource.mute}");
-            Debug.Log($"  Spatial Blend: {musicSource.spatialBlend} (0=2D, 1=3D)");
-            Debug.Log("=================================");
-
-            // Load and sort notes
             List<RhythmMapData.RhythmNote> sortedNotes = new List<RhythmMapData.RhythmNote>(currentMap.notes);
             sortedNotes.Sort((a, b) => a.timestamp.CompareTo(b.timestamp));
 
+            upcomingNotes.Clear();
             foreach (var note in sortedNotes)
             {
                 upcomingNotes.Enqueue(note);
@@ -131,17 +118,26 @@ namespace SceneHandler
             yield return new WaitForSeconds(0.5f);
 
             isReady = true;
-            Debug.Log("[GameManager] ✓ Ready! Press SPACE to start");
+            Debug.Log("[GameManager] ✓ Ready! Waiting for UI start signal...");
+        }
+
+        /// <summary>
+        /// Called by UI when loading is complete
+        /// </summary>
+        public void BeginGameFromUI()
+        {
+            if (isReady && !isPlaying)
+            {
+                StartGame();
+            }
+            else
+            {
+                Debug.LogWarning("[GameManager] Cannot start - game not ready or already playing!");
+            }
         }
 
         void Update()
         {
-            // Start game
-            if (isReady && !isPlaying && Keyboard.current.spaceKey.wasPressedThisFrame)
-            {
-                StartGame();
-            }
-
             if (isPlaying)
             {
                 sessionTime += Time.deltaTime;
@@ -167,28 +163,23 @@ namespace SceneHandler
                         break;
                 }
 
-                // Check if song is over
                 if (songTime > musicSource.clip.length && activeNotes.Count == 0)
                 {
                     EndGame();
                 }
             }
         }
-        double dspStartTime;
 
         void StartGame()
         {
             leadInTime = GetMaxTravelTime();
             sessionTime = 0f;
             songTime = 0f;
-
-            dspStartTime = AudioSettings.dspTime + leadInTime;
-            musicSource.PlayScheduled(dspStartTime);
-
-            musicStarted = true;
+            musicStarted = false;
             isPlaying = true;
+            
+            Debug.Log("[GameManager] ✓ Game started!");
         }
-
 
         float GetMaxTravelTime()
         {
@@ -207,7 +198,6 @@ namespace SceneHandler
 
         float CalculateSpawnTime(RhythmMapData.RhythmNote note)
         {
-            // Get spawn distance for this specific lane
             float spawnDistance = laneSystem.GetSpawnDistance(note.lane);
             float travelTime = spawnDistance / currentMap.noteSpeed;
             return note.timestamp - travelTime;
@@ -215,14 +205,12 @@ namespace SceneHandler
 
         void SpawnNote(RhythmMapData.RhythmNote noteData)
         {
-            // Validate lane
             if (noteData.lane < 0 || noteData.lane >= laneSystem.LaneCount)
             {
                 Debug.LogWarning($"[GameManager] Invalid lane {noteData.lane} for note");
                 return;
             }
 
-            // Get the appropriate UFO for this note type
             UFOController ufo = GetUFOForNoteType(noteData.type);
             if (ufo == null)
             {
@@ -230,31 +218,22 @@ namespace SceneHandler
                 return;
             }
 
-            // Move UFO to lane and trigger shoot animation
             ufo.MoveAndShoot(noteData.lane, noteData.type);
 
-            // Get spawn position from lane system
             Vector3 spawnPos = laneSystem.GetLaneSpawnPosition(noteData.lane);
-
-            // Spawn note cube
             GameObject noteCube = Instantiate(noteCubePrefab, spawnPos, Quaternion.identity);
             activeNotes.Add(noteCube);
 
-            // Initialize note
             NoteCubeController cubeController = noteCube.GetComponent<NoteCubeController>();
             if (cubeController != null)
             {
                 Vector3 targetPos = laneSystem.PlayerTargetPosition;
-                // Adjust target to match lane X
                 targetPos.x = laneSystem.GetLaneXPosition(noteData.lane);
-
                 cubeController.Initialize(noteData, currentMap.noteSpeed, targetPos, this);
             }
 
             notesSpawned++;
             notesRemaining--;
-
-            Debug.Log($"[GameManager] Spawned {noteData.type} note in lane {noteData.lane} at {songTime:F2}s");
         }
 
         UFOController GetUFOForNoteType(RhythmMapData.RhythmNote.NoteType type)
@@ -278,6 +257,40 @@ namespace SceneHandler
             Debug.Log("[GameManager] Game ended!");
             Debug.Log($"[GameManager] Total notes spawned: {notesSpawned}");
             isPlaying = false;
+
+            StartCoroutine(ReturnToMenuAfterDelay(3f));
+        }
+
+        IEnumerator ReturnToMenuAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+
+            if (menuUIManager != null)
+            {
+                menuUIManager.ShowMenu();
+            }
+
+            ResetGameState();
+        }
+
+        void ResetGameState()
+        {
+            isPlaying = false;
+            isReady = false;
+            songTime = 0f;
+            sessionTime = 0f;
+            notesSpawned = 0;
+            notesRemaining = 0;
+            musicStarted = false;
+
+            foreach (var note in activeNotes)
+            {
+                if (note != null)
+                    Destroy(note);
+            }
+            activeNotes.Clear();
+
+            upcomingNotes.Clear();
         }
 
         bool ValidateSetup()
@@ -286,42 +299,37 @@ namespace SceneHandler
 
             if (currentMap == null)
             {
-                Debug.LogError("[GameManager] ❌ No map assigned!");
+                Debug.LogError("[GameManager] ✗ No map assigned!");
                 valid = false;
             }
 
-            // Only check map's music track if we don't have a manual override
             if (manualSongOverride == null && (currentMap == null || currentMap.musicTrack == null))
             {
-                Debug.LogError("[GameManager] ❌ No audio! Need either 'Manual Song Override' OR map with music track!");
+                Debug.LogError("[GameManager] ✗ No audio!");
                 valid = false;
             }
 
             if (laneSystem == null)
             {
-                Debug.LogError("[GameManager] ❌ No lane system!");
+                Debug.LogError("[GameManager] ✗ No lane system!");
                 valid = false;
             }
 
             if (playerController == null)
             {
-                Debug.LogError("[GameManager] ❌ No player controller!");
+                Debug.LogError("[GameManager] ✗ No player controller!");
                 valid = false;
             }
 
             if (noteCubePrefab == null)
             {
-                Debug.LogError("[GameManager] ❌ No note cube prefab!");
+                Debug.LogError("[GameManager] ✗ No note cube prefab!");
                 valid = false;
             }
 
-            // Validate UFOs
             if (absorbUFO == null || shootUFO == null || shieldUFO == null)
             {
-                Debug.LogError("[GameManager] ❌ Not all UFOs assigned!");
-                Debug.LogError($"  Absorb UFO: {(absorbUFO != null ? "✓" : "❌")}");
-                Debug.LogError($"  Shoot UFO: {(shootUFO != null ? "✓" : "❌")}");
-                Debug.LogError($"  Shield UFO: {(shieldUFO != null ? "✓" : "❌")}");
+                Debug.LogError("[GameManager] ✗ Not all UFOs assigned!");
                 valid = false;
             }
 
@@ -334,5 +342,6 @@ namespace SceneHandler
         public int GetNotesSpawned() => notesSpawned;
         public int GetNotesRemaining() => notesRemaining;
         public PlayerController GetPlayer() => playerController;
+        public bool IsReady() => isReady;
     }
 }

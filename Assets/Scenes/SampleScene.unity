@@ -1784,9 +1784,9 @@ MonoBehaviour:
   osuFilePath: C:/Users/Sameer/SynthWave Pulsor/Assets/MyAssets/Audio/S1756 - osu!
     Beatmap Pack #1756/NicolArmarfi - Teatime, Fast Forward (Sakurai Miyo) [Future].osu
   targetMap: {fileID: 11400000, guid: 893d109b687154a47913f86bf066762b, type: 2}
-  targetLaneCount: 5
+  targetLaneCount: 4
   mappingMode: 1
-  customPattern: 0000000001000000000000000200000001000000
+  customPattern: 00000000010000000000000002000000
   clearExistingNotes: 1
   timeOffset: 0
   audioFolder: C:\Users\Sameer\SynthWave Pulsor\Assets\MyAssets\Audio\S1756 - osu!

@@ -1,0 +1,393 @@
+/* ========================================
+   SYNTHWAVE PULSOR - ENHANCED MENU STYLES
+   ======================================== */
+
+:root {
+    /* Color Variables */
+    --primary-yellow: rgb(255, 245, 179);
+    --secondary-orange: rgb(255, 117, 0);
+    --accent-purple: rgb(94, 0, 255);
+    --hover-yellow: rgb(255, 227, 140);
+    --click-orange: rgb(255, 153, 51);
+
+    /* Animation Timing */
+    --transition-fast: 0.15s;
+    --transition-normal: 0.3s;
+    --transition-slow: 0.5s;
+}
+
+/* ========================================
+   BACKGROUND & OVERLAYS
+   ======================================== */
+
+.menu-background {
+    transition-property: opacity, scale;
+    transition-duration: var(--transition-slow);
+}
+
+.gradient-overlay {
+    background-color: rgba(94, 0, 255, 0.1);
+    transition-property: opacity;
+    transition-duration: 2s;
+}
+
+/* ========================================
+   MAIN CONTAINERS
+   ======================================== */
+
+.main-content-container {
+    transition-property: opacity, translate;
+    transition-duration: var(--transition-slow);
+}
+
+.title-container {
+    transition-property: scale, opacity;
+    transition-duration: var(--transition-normal);
+}
+
+/* ========================================
+   TITLE & BRANDING
+   ======================================== */
+
+.game-title {
+    transition-property: scale, color;
+    transition-duration: var(--transition-normal);
+}
+
+.game-title:hover {
+    scale: 1.05;
+    color: var(--hover-yellow);
+}
+
+.version-label {
+    transition-property: opacity;
+    transition-duration: var(--transition-normal);
+}
+
+/* ========================================
+   MENU BUTTONS
+   ======================================== */
+
+.menu-button {
+    background-color: rgba(0, 0, 0, 0.3);
+    -unity-font-definition: url("project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime");
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    margin-bottom: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    /* Border glow effect */
+    border-left-width: 2px;
+    border-left-color: rgba(255, 117, 0, 0);
+
+    /* Smooth transitions */
+    transition-property: background-color, scale, color, border-left-color, translate;
+    transition-duration: var(--transition-normal);
+
+    /* Cursor */
+    cursor: url('project://database/Packages/com.unity.inputsystem/InputSystem/Plugins/UI/Cursor.png');
+}
+
+.menu-button:hover {
+    background-color: rgba(255, 117, 0, 0.2);
+    scale: 1.1;
+    color: var(--hover-yellow);
+    border-left-color: rgb(255, 117, 0);
+    border-left-width: 4px;
+    translate: 8px 0;
+}
+
+.menu-button:active {
+    scale: 1.05;
+    color: var(--click-orange);
+    background-color: rgba(255, 117, 0, 0.4);
+}
+
+.menu-button:focus {
+    border-left-width: 4px;
+    border-left-color: rgb(94, 0, 255);
+}
+
+/* Individual button accents */
+.menu-button-start:hover {
+    text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+}
+
+.menu-button-settings:hover {
+    text-shadow: 0 0 20px rgba(255, 117, 0, 0.5);
+}
+
+.menu-button-exit:hover {
+    text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+/* ========================================
+   PANELS
+   ======================================== */
+
+.menu-panel {
+    flex-grow: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-left-width: 2px;
+    border-left-color: rgba(255, 117, 0, 0.5);
+}
+
+.panel-animated {
+    transition-property: opacity, translate;
+    transition-duration: var(--transition-normal);
+}
+
+.panel-title {
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgba(255, 117, 0, 0.8);
+    text-shadow: 2px 2px 0 rgba(94, 0, 255, 0.5);
+}
+
+/* ========================================
+   SONG SELECTION
+   ======================================== */
+
+.songs-scrollview {
+    background-color: rgba(0, 0, 0, 0.2);
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-left-width: 1px;
+    border-left-color: rgba(255, 117, 0, 0.3);
+}
+
+.menu-item {
+    color: rgb(255, 255, 255);
+    font-size: 32px;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgba(0, 0, 0, 0.5);
+    height: 46px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-bottom: 8px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-left-width: 0px;
+    border-left-color: rgba(255, 117, 0, 0);
+
+    /* Smooth transitions */
+    transition-property: background-color, color, scale, border-left-width, translate;
+    transition-duration: var(--transition-fast);
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 117, 0, 0.3);
+    color: var(--hover-yellow);
+    scale: 1.05;
+    border-left-width: 4px;
+    border-left-color: rgb(255, 117, 0);
+    translate: 4px 0;
+    text-shadow: 2px 2px 4px rgba(94, 0, 255, 0.6);
+}
+
+.menu-item:active {
+    scale: 1.02;
+    color: var(--click-orange);
+    background-color: rgba(255, 117, 0, 0.5);
+}
+
+.menu-item:focus {
+    border-left-width: 3px;
+    border-left-color: rgb(94, 0, 255);
+}
+
+/* ========================================
+   EMPTY STATE
+   ======================================== */
+
+.empty-state {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-icon {
+    transition-property: scale, rotate;
+    transition-duration: var(--transition-slow);
+}
+
+.empty-icon:hover {
+    scale: 1.2;
+    rotate: 10deg;
+}
+
+/* ========================================
+   CORNER ACCENTS
+   ======================================== */
+
+.corner-accent {
+    transition-property: opacity, border-color;
+    transition-duration: var(--transition-normal);
+    opacity: 0.6;
+}
+
+.corner-accent:hover {
+    opacity: 1;
+    border-color: rgb(94, 0, 255);
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.footer-container {
+    transition-property: opacity;
+    transition-duration: var(--transition-normal);
+}
+
+.control-hint,
+.credit {
+    transition-property: color, opacity;
+    transition-duration: var(--transition-normal);
+}
+
+.control-hint:hover,
+.credit:hover {
+    color: rgba(255, 245, 179, 0.8);
+    opacity: 1;
+}
+
+/* ========================================
+   LOADING SCREEN
+   ======================================== */
+
+.loading-screen {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    align-items: center;
+    justify-content: center;
+    transition-property: opacity;
+    transition-duration: var(--transition-slow);
+}
+
+/* ========================================
+   SETTINGS PANEL ELEMENTS
+   ======================================== */
+
+.slider {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.slider .unity-base-slider__dragger {
+    background-color: var(--secondary-orange);
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+    border-width: 2px;
+    border-color: var(--accent-purple);
+    transition-property: scale, background-color;
+    transition-duration: var(--transition-fast);
+}
+
+.slider .unity-base-slider__dragger:hover {
+    scale: 1.2;
+    background-color: var(--hover-yellow);
+}
+
+.slider .unity-base-slider__tracker {
+    background-color: rgba(255, 255, 255, 0.2);
+    height: 10px;
+    border-radius: 5px;
+}
+
+.slider .unity-base-slider__dragger-border {
+    background-color: var(--accent-purple);
+}
+
+/* ========================================
+   ANIMATIONS (Can be triggered via code)
+   ======================================== */
+
+/* Fade in animation */
+.fade-in {
+    animation-name: fadeIn;
+    animation-duration: var(--transition-slow);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Slide in from left */
+.slide-in-left {
+    animation-name: slideInLeft;
+    animation-duration: var(--transition-normal);
+}
+
+@keyframes slideInLeft {
+    from { translate: -100px 0; opacity: 0; }
+    to { translate: 0 0; opacity: 1; }
+}
+
+/* Slide in from right */
+.slide-in-right {
+    animation-name: slideInRight;
+    animation-duration: var(--transition-normal);
+}
+
+@keyframes slideInRight {
+    from { translate: 100px 0; opacity: 0; }
+    to { translate: 0 0; opacity: 1; }
+}
+
+/* Scale pop */
+.scale-pop {
+    animation-name: scalePop;
+    animation-duration: var(--transition-fast);
+}
+
+@keyframes scalePop {
+    0% { scale: 0.8; opacity: 0; }
+    50% { scale: 1.1; }
+    100% { scale: 1; opacity: 1; }
+}
+
+/* Pulse animation */
+.pulse {
+    animation-name: pulse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Glow animation */
+.glow {
+    animation-name: glow;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        -unity-text-outline-color: rgba(255, 117, 0, 0.5);
+    }
+    50% {
+        -unity-text-outline-color: rgba(255, 117, 0, 1);
+    }
+}

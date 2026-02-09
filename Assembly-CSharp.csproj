@@ -47,9 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\PlayerManager\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\UI\MainMenuUIManager.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\OsuManiaImporter.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\AudioDebugger.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\NoteCubeController.cs" />
+    <Compile Include="Assets\Scripts\UI\MenuInputHandler.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\RhythmGameManager.cs" />
     <Compile Include="Assets\Scripts\PlayerManager\PlayerLocomotion.cs" />
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\ChassisController.cs" />
@@ -67,11 +69,15 @@
     <Compile Include="Assets\Scripts\PlayerManager\PlayerInputManager.cs" />
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\RotateCamera.cs" />
     <Compile Include="Assets\HONETi\mobile_cartoon_GUI\Scripts\switch_scenes.cs" />
+    <Compile Include="Assets\Scripts\SceneHandler\BeatmapManager.cs" />
     <Compile Include="Assets\SpaceShuttle\Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\SceneHandler\LaneSystem.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+    <None Include="Assets\UI Toolkit\MainMenu_Enhanced.uxml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\UI Toolkit\plusor-menu.uss" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile-2-Pass.shader" />
+    <None Include="Assets\UI Toolkit\MainMenu.uxml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
@@ -85,13 +91,12 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\Suggo Creations\RETROWAVE SKIES Lite\Shaders\Includes\MainLight.hlsl" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
-    <None Include="Assets\Resources\PerformanceTestRunSettings.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\UI Toolkit\plusor-menu-enhanced.uss" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\MyAssets\RetrowaveGrid.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\Resources\PerformanceTestRunInfo.json" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
